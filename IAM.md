@@ -110,8 +110,8 @@ IAM allows you to create users and groups and manage permissions for them within
     - For example: The **least privilege mechanism** ensures users have only the permissions needed for their job duties and nothing more.  
 
 #### Why Create IAM Users?  
-Consider a scenario where two AWS administrators hire a junior employee to monitor resources:  
-- They can create an IAM user account for the junior employee.  
+Consider a scenario where two AWS administrators hire a junior employee to just monitor resources:  
+- Junior resource may create/modify/delete resource, if we share root credentials.  
 - Assign the **ReadOnlyAccess** policy to allow monitoring but restrict the ability to modify resources.  
 - This follows the **least privilege principle** by granting only the permissions required for their role.  
 
@@ -143,7 +143,3 @@ Consider a scenario where two AWS administrators hire a junior employee to monit
 - If the user attempts to perform an unauthorized action, AWS will respond with:  
   - **Error Message**: "You are not authorized to perform this operation."  
   - Common reasons: Permissions denied, not allowed to access certain resources, or lack of required policies.  
-
---- 
-
-This revised version is polished, concise, and addresses key points with added clarity. Let me know if you need further adjustments!
