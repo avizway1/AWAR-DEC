@@ -1,7 +1,7 @@
 ### **Steps to Create an AWS Account**
 
 ### **Step 1: Provide Root User Email and Account Name**  
-1. Go to the [AWS Signup page](https://aws.amazon.com/console).  
+1. Go to the AWS console webpage https://aws.amazon.com/console.  
 2. Enter your **root user email address** (the email ID you will use as the primary login for your AWS account).  
 3. Provide an **account name** (e.g., "My AWS Account"/ "Prod" / "UAT" / "Dev" / "Training").  
 4. Verify your email:  
