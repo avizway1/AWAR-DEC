@@ -1,3 +1,4 @@
+
 ### **Basic Support Plan**  
 **Cost:** Free  
 **When to Choose:** Ideal when creating your own AWS account for learning or personal projects.  
@@ -191,3 +192,108 @@ Consider a scenario where two AWS administrators hire a junior employee to just 
 1. Review the user details, assigned permissions, and any attached policies.  
 2. If everything is correct, click **Create User**.  
 3. Download or copy the **user credentials** (username and temporary password) securely for the user to log in.
+
+----
+
+### Understanding Policies in AWS  
+
+**Policies:**  
+Policies are JSON-formatted documents that define permissions on AWS services and resources. They control what actions an IAM user, group, or role can perform within the account.  
+
+#### Common Policies:  
+1. **S3FullAccess:** Grants the user full permissions to perform any operation on the S3 service.  
+2. **IAMFullAccess:** Grants full permissions to manage IAM users, groups, roles, and policies.  
+3. **AdministratorAccess:** Provides unrestricted access to all services and resources in the account (except account management).  
+   - An IAM user with this policy is equivalent to the root user but **cannot manage the AWS account settings**, such as billing or account closure.  
+
+---
+
+### IAM Permissions Model  
+
+1. **Implicit Allow:**  
+   If a user is granted a policy like `S3FullAccess`, the user can access only the S3 service. All other services are implicitly denied.  
+
+2. **Explicit Deny:**  
+   Deny overrides allow. For example, if a user is granted all-service access but explicitly denied S3 access, they cannot access S3.  
+
+---
+
+### AWS-Managed vs. Customer-Managed Policies  
+
+1. **AWS-Managed Policies:**  
+   These are pre-defined by AWS and cater to common use cases. They include:  
+   - **Service-based policies:** Examples: `AmazonEC2FullAccess`, `AmazonS3ReadOnlyAccess`.  
+   - **Job-function policies:** Examples: `AdministratorAccess`, `PowerUserAccess`, `DatabaseAdministrator`.  
+   **Limitations:** These policies cannot be modified or deleted.  
+
+2. **Customer-Managed Policies:**  
+   These are custom policies created by account administrators to meet specific business needs.  
+
+---
+
+### Policy Components  
+
+Policies are structured with the following key components:  
+1. **Service:** The AWS service the policy targets (e.g., `s3`).  
+2. **Effect:** The result of the policy, which can be either `Allow` or `Deny`.  
+3. **Actions:** The operations permitted or denied (e.g., `s3:PutObject`, `ec2:StartInstances`).  
+4. **Resources:** The specific resources the policy applies to (e.g., S3 buckets, EC2 instances).  
+
+---
+
+### Examples  
+
+#### **Custom Policy:** Allow Full Access to S3 and EC2 Services  
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "ec2:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+#### **Custom Deny Policy for S3 Service**  
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "s3:*",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+---
+
+### Testing Deny Policies  
+
+1. **Scenario:**  
+   - Create an IAM user.  
+   - Assign the `AdministratorAccess` policy, granting unrestricted access.  
+   - Attach a custom `DenyS3` policy to explicitly block S3 access.  
+
+2. **Verification:**  
+   - Attempt to access S3 resources.  
+   - Access will be denied, as **explicit deny overrides allow**, regardless of the `AdministratorAccess` policy.  
+
+---
+
+### Key Rule: Explicit Deny Precedence  
+
+If a permission is **explicitly denied** at any level—user, group, or resource—it will override any allow permissions. For instance:  
+- If 100 actions are allowed and one is explicitly denied, the **deny** will take effect.  
+
+---
