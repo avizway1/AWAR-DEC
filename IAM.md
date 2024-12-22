@@ -297,3 +297,90 @@ If a permission is **explicitly denied** at any level—user, group, or resource
 - If 100 actions are allowed and one is explicitly denied, the **deny** will take effect.  
 
 ---
+
+
+### **Inline Policies**  
+
+An **Inline Policy** is directly embedded into a single user, group, or role.  
+- **When to Use Inline Policies:**  
+  - In special cases where:  
+    - A user has reached the **maximum number of managed policies** (default is 20 per user).  
+    - There is a need to overcome **policy size limits** (6,144 characters per policy).  
+- **Key Characteristics of Inline Policies:**  
+  - **Not reusable**: Inline policies are tied to a specific IAM entity and cannot be shared or reused with others.  
+  - **Difficult to track**: Since they are embedded, inline policies can be harder to audit compared to managed policies.  
+  - **Best Practice**: Use managed policies wherever possible for scalability, reusability, and easier maintenance.  
+
+---
+
+### **How to Track IAM User Activities**  
+
+You can monitor IAM user activities using the **CloudTrail** service:  
+- **What CloudTrail Does:**  
+  - Logs all API calls and activities performed by IAM users, roles, and services.  
+  - Captures critical details such as:  
+    - **Who** made the request (user/role).  
+    - **What** action was performed.  
+    - **When** and **where** it happened.  
+- **Filtering Logs:**  
+  - Use filters like **username**, **event name**, and **time range** to search for specific activities.  
+- **Default Behavior:**  
+  - CloudTrail is **enabled by default** in all AWS accounts.  
+  - Retains activity logs for the **last 90 days**.  
+- **Best Practice:**  
+  - For long-term retention, configure CloudTrail to send logs to an **S3 bucket** or integrate with **CloudWatch Logs** for deeper analysis.  
+
+---
+
+### **How to Track User Last Login Information or MFA Status**  
+
+To gather details about user account activity, download the **Credentials Report**:  
+1. Navigate to the **IAM Dashboard** in the AWS Management Console.  
+2. Click on **"Download Credentials Report"**.  
+3. This report provides:  
+   - **Last login information**: Tracks the most recent sign-in activity of each user.  
+   - **User creation date**: Indicates when the user was added to the account.  
+   - **MFA status**: Shows whether MFA is enabled or not.  
+   - **Access key status**: Displays the state of access keys (active/inactive).  
+
+---
+
+### **Amazon Resource Name (ARN)**  
+
+An **Amazon Resource Name (ARN)** uniquely identifies AWS resources within your account.  
+- **Format:**  
+  - `arn:partition:service:region:account-id:resource-type/resource-id`.  
+- **Examples:**  
+  - IAM user ARN: `arn:aws:iam::123456789012:user/JohnDoe`.  
+  - S3 bucket ARN: `arn:aws:s3:::example-bucket`.  
+- **Use Cases:**  
+  - In policies to specify resources a user or service can access.  
+  - To track resources in logs and audits.  
+
+---
+
+### **How to Track Resources Shared from Your AWS Account to Another AWS Account**  
+
+Use the **IAM Access Analyzer** to identify and analyze shared resources:  
+- **Key Features:**  
+  - **External Access Analyzer:** Detects resources shared externally (e.g., to other AWS accounts or public entities).  
+  - **Unused Resource Analyzer:** Identifies unused shared resources for better security and cost optimization.  
+  - **Supported Resource Types:** Includes S3 buckets, IAM roles, KMS keys, Lambda functions, and more.  
+- **Best Practice:**  
+  - Regularly review shared resources to ensure compliance and avoid unintended access.  
+
+---
+
+### **Permissions Boundary**  
+
+A **Permissions Boundary** is an advanced IAM feature that defines the **maximum allowable permissions** for a user or role:  
+- **Purpose:**  
+  - Acts as a guardrail to restrict the scope of permissions, even if additional policies are attached.  
+- **Use Case:**  
+  - To enforce organizational security policies, such as limiting access for a contractor to specific AWS regions or resources.  
+- **Example:**  
+  - A developer has a permissions boundary allowing only read-only access to S3 buckets, regardless of other policies granting broader permissions.  
+- **Best Practice:**  
+  - Use permissions boundaries for specific, sensitive scenarios like compliance enforcement.  
+
+---
