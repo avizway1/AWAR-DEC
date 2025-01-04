@@ -26,8 +26,8 @@ A server is a powerful computer designed to process requests, store data, and pr
 - Instance = Server = Azure VM (Azure) = Compute Engine (Google Cloud).
 
 #### **Server OS Types**
-- **Client OS**: Windows 7, Windows 10.
-- **Server OS**: Windows Server 2008 R2, 2012, 2016, 2019, and newer.
+- **Client OS**: Windows 7, Windows 10, Ubuntu Desktop
+- **Server OS**: RHEL, Ubuntu Server, Windows Server 2008 R2, 2012, 2016, 2019, 2022, 2025 and newer.
 
 ---
 
