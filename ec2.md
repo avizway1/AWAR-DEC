@@ -258,8 +258,7 @@ Linux OS Examples:
 
 #### **Option 2: Using Windows Command Prompt or PowerShell**  
 1. Install **OpenSSH Client** on your Windows laptop if not already installed.  
-   - Go to **Settings** → **Apps & Features** → **Optional Features** → Enable or Install **OpenSSH Client**.  
-   - [Microsoft Docs for OpenSSH Setup](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse).  
+   - Go to **Settings** → **Apps & Features** → **Optional Features** → Enable or Install **OpenSSH Client**.   
 2. Open Command Prompt or PowerShell.  
 3. Use the command:  
    ```
