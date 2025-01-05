@@ -60,9 +60,27 @@ A server is a powerful computer designed to process requests, store data, and pr
      - If terminated manually, you're charged for the full duration.
 
 ---
+### **Understanding Free Tier**
+
+The AWS Free Tier allows you to use up to **750 hours per month** for **t2.micro instances** (on-demand) for both **Windows** and **Linux** separately. Here's how it works:
+
+1. **Single Instance Usage**  
+   Running **1 instance** for **24 hours a day** in a 31-day month uses:  
+   `1 instance x 24 hrs x 31 days = 744 hrs`  
+   This is **within the 750-hour Free Tier limit**, so it's free.
+
+2. **Multiple Instance Usage**  
+   Running **2 instances** for **24 hours a day** for 16 days uses:  
+   `2 instances x 24 hrs x 16 days = 768 hrs`  
+   This **exceeds the 750-hour Free Tier limit** by 18 hours, so you'll be billed for those extra hours.
+
+**Key Points:**
+- The free tier applies to combined usage across instances (e.g., multiple instances sharing the 750-hour pool).
+- Plan your usage carefully to stay within the limit and avoid charges.
+
+---
 
 ### **Launching a Windows EC2 Instance**
-
 
 #### **Step 1: Add Tags**  
 - Tags help organize and identify resources.  
