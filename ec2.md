@@ -151,6 +151,22 @@ Operating System: Linux, Windows, etc.
 
 ---
 
+### **Common error: Permissions are too open / Bad permisisons**
+Please open command prompt from the location where keypair is present
+
+Prevent the file from inheriting permissions:
+```
+icacls "<path-to-private-key-file>" /inheritance:r
+```
+Deny all access to the Everyone group:
+```
+icacls "<path-to-private-key-file>" /deny Everyone:F
+```
+Grant Read Permission Only to Your User:
+```
+icacls "<path-to-private-key-file>" /grant:r "%USERNAME%:R"
+```
+
 ### **Instance Management**
 - **Start/Stop**: Temporarily pause usage while retaining configuration.
 - **Terminate**: Permanently delete the instance.
