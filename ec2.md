@@ -53,6 +53,7 @@ A server is a powerful computer designed to process requests, store data, and pr
 3. **Spot Instances**
    - For **flexible workloads** with no critical data.
    - Bid your price against AWS pricing.
+   - If we have an application running inside an ec2 instance, that can be interrupted (or) if any interruption happens, it can be recovered without any organisational affects.
    - **Use Case**: Testing or temporary environments.
    - **Pricing Rules**:
      - If AWS price exceeds your bid, the instance is terminated.
