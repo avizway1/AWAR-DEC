@@ -359,3 +359,68 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
 
 ---
 
+### Linux File Viewing and Manipulation Commands:
+
+1. **`cat filename`**  
+   - **Purpose**: Displays the entire contents of a file.  
+   - **Example**:  
+     ```bash
+     cat example.txt
+     ```
+
+2. **`more filename`**  
+   - **Purpose**: Displays file contents page by page, useful for long files.  
+   - **Example**:  
+     ```bash
+     more example.txt
+     ```
+   - **Navigation**:  
+     - Press `Enter` to scroll line by line.  
+     - Press `Space` to scroll page by page.
+
+3. **`head /etc/passwd`**  
+   - **Purpose**: Displays the first 10 lines of a file by default.  
+   - **Example**:  
+     ```bash
+     head example.txt
+     ```
+
+4. **`tail /etc/passwd`**  
+   - **Purpose**: Displays the last 10 lines of a file by default.  
+   - **Example**:  
+     ```bash
+     tail example.txt
+     ```
+
+5. **`head -n 2 /etc/passwd`**  
+   - **Purpose**: Displays the first `n` lines of a file.  
+   - **Example**:  
+     ```bash
+     head -n 5 example.txt  # Displays the top 5 lines
+     ```
+
+6. **`tail -n 2 /etc/passwd`**  
+   - **Purpose**: Displays the last `n` lines of a file.  
+   - **Example**:  
+     ```bash
+     tail -n 5 example.txt  # Displays the bottom 5 lines
+     ```
+
+7. **`pr /etc/passwd`**  
+   - **Purpose**: Formats a file for printing.  
+   - **Example**:  
+     ```bash
+     pr example.txt
+     ```
+
+8. **`sort /etc/passwd`**  
+   - **Purpose**: Sorts file contents in alphabetical order.  
+   - **Example**:  
+     ```bash
+     sort example.txt
+     ```
+   - **Options**:  
+     - `-r`: Reverse order sorting.  
+       ```bash
+       sort -r example.txt
+       ```
