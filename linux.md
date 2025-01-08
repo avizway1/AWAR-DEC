@@ -190,7 +190,6 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
 #### **Environment and User Commands:**
 1. **`env`**: Displays all the environment variables for the current user.  
 2. **`whoami`**: Shows the current user.  
-3. **`~user`**: Navigates to the specified user's home directory (e.g., `~john` for John's home).
 
 ---
 
