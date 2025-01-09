@@ -423,3 +423,43 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
        ```bash
        sort -r example.txt
        ```
+---
+### Using ZIP Format in Linux
+
+#### Install ZIP and UNZIP tools:
+1. **Install `zip`:**  
+   ```
+   sudo yum install zip -y
+   ```
+2. **Install `unzip`:**  
+   ```
+   sudo yum install unzip -y
+   ```
+
+#### Zip Commands:
+
+1. **Zip multiple files into an archive:**  
+   ```
+   zip archive.zip file1.txt file2.txt file3.txt
+   ```
+   - Creates a `archive.zip` containing `file1.txt`, `file2.txt`, and `file3.txt`.
+
+2. **Zip all files in the current directory:**  
+   ```
+   zip archive.zip *
+   ```
+   - Adds all files in the current directory to `archive.zip`.
+
+3. **Zip an entire folder (including its subdirectories):**  
+   ```
+   zip -r archive.zip mydirectory
+   ```
+   - Creates a zip file named `archive.zip` containing the folder `mydirectory` and all its contents recursively.
+
+#### Unzip Commands:
+1. **Unzip an archive:**  
+   ```
+   unzip archive.zip
+   ```
+   - Extracts the contents of `archive.zip` into the current directory.
+
