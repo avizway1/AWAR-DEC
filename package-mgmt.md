@@ -90,31 +90,11 @@
 
 ---
 
-### **How to Add a Repository**
-Repositories in Linux are sources where packages are stored and managed.
-
 - **Repository Configuration:**  
   - Files located in `/etc/yum.repos.d/` or `/etc/dnf/dnf.conf` contain information about enabled repositories.
 
 #### **1. Repository Location:**
-- On **Amazon Linux 2023** and other RPM-based distributions:  
-  `/etc/yum.repos.d/*.repo`  
-  - Contains `.repo` configuration files.
-
-#### **2. EPEL Repository Installation:**
-- **Amazon Linux 2 (YUM):**
-  ```bash
-  sudo amazon-linux-extras install epel -y
-  ```
-- **Amazon Linux 2023 (DNF):**
-  ```bash
-  sudo dnf install epel-release -y
-  sudo dnf config-manager --set-enabled epel
-  ```
-- Verify the repository:  
-  ```bash
-  dnf repolist
-  ```
+-  /etc/yum.repos.d/*.repo` Contains `.repo` configuration files.
 
 ---
 
@@ -141,3 +121,54 @@ Repositories in Linux are sources where packages are stored and managed.
 
 ---
 
+## **Process Management**
+
+### Identifying and Managing Process IDs (PIDs) in Linux
+
+#### **What is a PID?**
+- A PID (Process ID) is a unique identifier assigned by the operating system to each running process.
+
+---
+
+#### **Commands to Identify PIDs and Manage Processes**
+
+1. **View Background and Suspended Jobs:**
+   - `jobs`: Displays all background and suspended processes in the current shell.
+
+2. **View the Process Tree:**
+   - `pstree`: Shows the process tree in a hierarchical structure.
+   - `pstree | less`: Use with `less` to view the process tree page by page.
+
+3. **List Running Processes:**
+   - `ps`: Displays processes running in the current terminal.
+   - `ps aux`: Lists all running processes across the system in a detailed format.
+   - `ps faux`: Displays the process tree along with detailed process information.
+
+4. **Real-Time Process Monitoring:**
+   - `top`: Displays a continuously updating list of running processes, their CPU, memory usage, etc. Press `z` for a colorized view.
+
+5. **Quit from any Continuous Process View:**
+   - Press `q` to exit from commands like `top`.
+
+---
+
+#### **System and Memory Information**
+
+1. **Check System Uptime:**
+   - `uptime`: Provides the time since the system was last booted, along with load averages.
+
+2. **Check Free Memory:**
+   - `free`: Displays memory usage statistics.
+   - `free -h`: Displays memory usage in a human-readable format.
+
+---
+
+#### **Killing a Process**
+1. **Terminate a Process by PID:**
+   - `kill PID`: Terminates the process with the specified PID.
+
+For example:
+   ```
+   ps aux | grep some-process
+   kill 1234  # Replace 1234 with the actual PID of the process.
+   ```
