@@ -93,6 +93,9 @@
 ### **How to Add a Repository**
 Repositories in Linux are sources where packages are stored and managed.
 
+- **Repository Configuration:**  
+  - Files located in `/etc/yum.repos.d/` or `/etc/dnf/dnf.conf` contain information about enabled repositories.
+
 #### **1. Repository Location:**
 - On **Amazon Linux 2023** and other RPM-based distributions:  
   `/etc/yum.repos.d/*.repo`  
@@ -136,27 +139,5 @@ Repositories in Linux are sources where packages are stored and managed.
    systemctl enable httpd
    ```
 
-#### **Nginx Installation:**
-1. Check for available Nginx versions:  
-   ```bash
-   dnf search nginx
-   ```
-2. Install Nginx:  
-   ```bash
-   dnf install nginx
-   ```
-3. Start and enable Nginx:  
-   ```bash
-   systemctl start nginx
-   systemctl enable nginx
-   ```
-
 ---
 
-### **Logs and Configuration**
-- **DNF Logs:**  
-  Location: `/var/log/dnf.log`  
-  - Contains records of all DNF actions (installations, updates, removals).
-
-- **Repository Configuration:**  
-  - Files located in `/etc/yum.repos.d/` or `/etc/dnf/dnf.conf` contain information about enabled repositories.
