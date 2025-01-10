@@ -150,6 +150,16 @@
 5. **Quit from any Continuous Process View:**
    - Press `q` to exit from commands like `top`.
 
+#### **Killing a Process**
+1. **Terminate a Process by PID:**
+   - `kill PID`: Terminates the process with the specified PID.
+
+For example:
+   ```
+   ps aux | grep some-process
+   kill 1234  # Replace 1234 with the actual PID of the process.
+   ```
+
 ---
 
 #### **System and Memory Information**
@@ -163,12 +173,3 @@
 
 ---
 
-#### **Killing a Process**
-1. **Terminate a Process by PID:**
-   - `kill PID`: Terminates the process with the specified PID.
-
-For example:
-   ```
-   ps aux | grep some-process
-   kill 1234  # Replace 1234 with the actual PID of the process.
-   ```
