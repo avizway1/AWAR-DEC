@@ -424,6 +424,7 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
        sort -r example.txt
        ```
 ---
+
 ### Using ZIP Format in Linux
 
 #### Install ZIP and UNZIP tools:
@@ -463,3 +464,76 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
    ```
    - Extracts the contents of `archive.zip` into the current directory.
 
+---
+
+### Understanding `ECHO` command.
+
+1. **Print text to the terminal:**
+   ```bash
+   echo "Hello, World!"
+   ```
+   Output:
+   ```
+   Hello, World!
+   ```
+
+2. **Redirect output to a file:**
+   ```bash
+   echo "This is a test" > file.txt
+   ```
+   - Writes "This is a test" into `file.txt`.
+
+3. **Append text to a file:**
+   ```bash
+   echo "Adding another line" >> file.txt
+   ```
+   - Adds "Adding another line" to `file.txt`.
+   
+4. **Print a variable value:**
+   ```bash
+   name="Avinash"
+   echo "Hello, $name!"
+   ```
+   Output:
+   ```
+   Hello, Avinash!
+   ```
+---
+
+### **What is `grep` in Linux?**
+- `grep` (Global Regular Expression Print) is a powerful command-line tool used for searching text within files.
+- It searches files for lines that match a specified pattern and prints them.
+
+
+### **Examples of `grep`**
+
+1. **Search for a word in a file:**
+   ```bash
+   grep "word" filename.txt
+   ```
+   - Searches for "word" in `filename.txt`.
+
+2. **Case-insensitive search:**
+   ```bash
+   grep -i "word" filename.txt
+   ```
+   - Matches "word", "Word", or "WORD".
+
+3. **Search for a word in multiple files:**
+   ```bash
+   grep "word" file1.txt file2.txt
+   ```
+   - Searches for "word" in both `file1.txt` and `file2.txt`.
+
+4. **Search recursively in directories:**
+   ```bash
+   grep -r "word" /path/to/directory
+   ```
+   - Searches for "word" in all files under the specified directory.
+
+5. **Using `grep` with pipes:**
+    ```bash
+    ps aux | grep "process"
+    ```
+    - Filters the output of `ps aux` to show lines containing "process".
+---
