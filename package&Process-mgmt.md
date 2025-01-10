@@ -115,8 +115,8 @@
    ```
 4. Start and enable Apache:  
    ```bash
-   systemctl start httpd
-   systemctl enable httpd
+   systemctl start httpd  (0r) Service httpd start
+   systemctl enable httpd (or) chkconfig httpd on
    ```
 
 ---
