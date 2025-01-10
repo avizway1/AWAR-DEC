@@ -463,7 +463,17 @@ The Linux file system is organized hierarchically, with `/` as the root. Each di
    unzip archive.zip
    ```
    - Extracts the contents of `archive.zip` into the current directory.
-
+#### tar.gz Zip Commands:
+1. **Create a .tar.gz archive:**  
+   ```
+   tar -czvf myfile.tar.gz file1 file2 folder1
+   ```
+  
+2. **Unzip a .tzr.gz archive:**  
+   ```
+   tar -xzvf myfile.tar.gz
+   ```
+   - Extracts the contents of `myfile.tar.gz` into the current directory.
 ---
 
 ### Understanding `ECHO` command.
