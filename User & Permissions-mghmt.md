@@ -1,3 +1,67 @@
+### **Important User Management Commands in Linux**
+
+1. **Create a New User**
+   - Command:  
+     ```bash
+     sudo useradd username
+     ```
+2. **Set a Password for the User**
+   - Command:  
+     ```bash
+     sudo passwd username
+     ```
+     This sets or updates the password for the user.
+
+3. **Enable Password Authentication**
+   - **Step 1:** Edit the SSH configuration file to enable password authentication:  
+     ```bash
+     sudo vim /etc/ssh/sshd_config
+     ```
+   - **Step 2:** Locate and update these lines:
+     ```plaintext
+     PasswordAuthentication yes
+     ```
+   - **Step 3:** Restart the SSH service to apply changes:
+     ```bash
+     sudo systemctl restart sshd
+     ```
+
+4. **Switch to Another User**
+   - Command:  
+     ```bash
+     su - username
+     ```
+     This command allows you to log in as another user and access their environment.
+
+
+### **Additional User Management Commands**
+- **Delete a User:**  
+  ```bash
+  sudo userdel username
+  ```
+  To delete the user along with their home directory:
+  ```bash
+  sudo userdel -r username
+  ```
+
+- **View User Details:**  
+  ```bash
+  id username
+  ```
+
+- **Modify a User's Information:**  
+  ```bash
+  sudo usermod -l newusername oldusername
+  ```
+
+- **View Currently Logged-in Users:**  
+  ```bash
+  who
+  ```
+
+
+
+---
 Permissions in Linux control who can read, write, or execute a file or directory. Here's a breakdown of key concepts and commands:
 
 ---
