@@ -48,18 +48,10 @@
   ```bash
   id username
   ```
-
-- **Modify a User's Information:**  
-  ```bash
-  sudo usermod -l newusername oldusername
-  ```
-
 - **View Currently Logged-in Users:**  
   ```bash
   who
   ```
-
-
 
 ---
 Permissions in Linux control who can read, write, or execute a file or directory. Here's a breakdown of key concepts and commands:
