@@ -32,7 +32,19 @@
      su - username
      ```
      This command allows you to log in as another user and access their environment.
+To add a user to the `wheel` group, which grants sudo permissions on many Linux distributions, you can use the following command:
 
+```bash
+sudo usermod -aG wheel username
+```
+---
+
+### Verify the User's Group Membership
+After adding the user, you can verify their group memberships using:
+```bash
+groups username
+```
+---
 
 ### **Additional User Management Commands**
 - **Delete a User:**  
@@ -52,6 +64,45 @@
   ```bash
   who
   ```
+---
+
+**To log in directly as another user to your EC2 instance without using a keypair, you can set up password-based authentication.
+**
+---
+
+#### 1. **Switch to the User and Set a Password**
+   - Create a new user (if not already created):
+     ```bash
+     sudo useradd -m username
+     ```
+   - Set a password for the user:
+     ```bash
+     sudo passwd username
+     ```
+
+#### 2. **Enable Password Authentication for SSH**
+   - Edit the SSH configuration file:
+     ```bash
+     sudo vim /etc/ssh/sshd_config
+     ```
+   - Look for the following lines and update them:
+     ```plaintext
+     PasswordAuthentication yes
+     ```
+   - Save and exit the editor.
+
+#### 3. **Restart the SSH Service**
+   - Restart the SSH service to apply changes:
+     ```bash
+     sudo systemctl restart sshd
+     ```
+#### 4. **Connect to the EC2 Instance**
+   - Use an SSH client to log in with the username and password:
+     ```bash
+     ssh username@<EC2-Public-IP>
+     ```
+   - You will be prompted for the password set in Step 1.
+
 
 ---
 Permissions in Linux control who can read, write, or execute a file or directory. Here's a breakdown of key concepts and commands:
