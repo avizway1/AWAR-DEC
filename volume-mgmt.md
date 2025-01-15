@@ -71,6 +71,34 @@ The IOPS can be calculated as:
 4. **Magnetic (Standard)**:
    - **Suitable for**: Low-cost storage solutions for less frequently accessed data.
    - Min: 1 GiB, Max: 1 TiB.
+---
+### **AWS EBS Volume Types and Primary Use Cases**
+
+1. **gp2 (General Purpose SSD):**  
+   - **Use Case:** Balanced performance for most workloads.  
+   - **Example/Industry:** Small databases, development environments (e.g., retail websites).
+
+2. **gp3 (General Purpose SSD):**  
+   - **Use Case:** Cost-effective storage with the ability to provision IOPS and throughput separately.  
+   - **Example/Industry:** Application servers, virtual desktops (e.g., SaaS platforms).
+
+3. **io1 (Provisioned IOPS SSD):**  
+   - **Use Case:** High-performance storage for critical, latency-sensitive applications.  
+   - **Example/Industry:** Large databases (e.g., financial transaction systems).
+
+4. **io2 (Provisioned IOPS SSD):**  
+   - **Use Case:** Durable, high-performance storage for mission-critical workloads.  
+   - **Example/Industry:** ERP systems, OLTP databases (e.g., healthcare or manufacturing).
+
+5. **st1 (Throughput Optimized HDD):**  
+   - **Use Case:** Low-cost, high-throughput storage for large, sequential workloads.  
+   - **Example/Industry:** Data warehouses, log processing (e.g., analytics firms).
+
+6. **sc1 (Cold HDD):**  
+   - **Use Case:** Lowest-cost storage for infrequently accessed data.  
+   - **Example/Industry:** Archiving, backups (e.g., media archives for entertainment).  
+
+---
 
 ### File Systems
 - **Windows**: FAT, FAT32, NTFS, ReFS.
