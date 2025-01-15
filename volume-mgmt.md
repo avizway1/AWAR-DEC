@@ -127,6 +127,19 @@ The IOPS can be calculated as:
    - `df -Th`: List available volumes.
    - Example: `/dev/xvdf` (new volume).
 
+The `lsblk` and `df` commands in Linux provide information about disk and file systems, but they serve different purposes and present the information in distinct ways. 
+
+  - `lsblk` is hardware-focused and shows all block devices, whether mounted or not.
+  - `df` is file system-focused and only shows mounted partitions.
+
+
+| **Command** | **Purpose** | **Output Focus** | **Key Use Cases** |
+|-------------|-------------|------------------|-------------------|
+| `lsblk`     | Lists information about block devices. | Details about block devices, such as disks and their partitions (e.g., size, type, mount points). | Viewing disk layout, identifying devices, and checking partitions and mount points. |
+| `df`        | Displays disk space usage of file systems. | File system storage details (e.g., total size, used, available, and percentage of use). | Monitoring file system usage, checking disk space on mounted file systems. |
+
+
+
 2. **Prepare Volume**:
    - Check file system: `file -s /dev/xvdf`.
      - Output “data”: No file system.
