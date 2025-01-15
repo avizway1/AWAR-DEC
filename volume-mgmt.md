@@ -19,7 +19,10 @@ IOPS is calculated based on the following factors:
    - The rate at which data is transferred, typically measured in MB/s.
 
 ### **IOPS Formula**
-\[ \text{IOPS} = \frac{\text{Throughput} \times 1024}{\text{Block Size}} \]
+
+\[
+\text{IOPS} = \frac{\text{Throughput} \times 1024}{\text{Block Size}}
+\]
 
 - **Throughput** is in MB/s.
 - **Block Size** is in KB.
