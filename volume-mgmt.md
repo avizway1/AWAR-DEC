@@ -20,22 +20,19 @@ IOPS is calculated based on the following factors:
 
 ### **IOPS Formula**
 
-\[
-\text{IOPS} = \frac{\text{Throughput} \times 1024}{\text{Block Size}}
-\]
+**IOPS= Throughput×1024 / BlockSize**
 
 - **Throughput** is in MB/s.
 - **Block Size** is in KB.
 
-### **Practical Example**
+### **Example**
 If a storage device has:
 - **Throughput:** 128 MB/s
 - **Block Size:** 4 KB
 
 The IOPS can be calculated as:
-\[
-\text{IOPS} = \frac{128 \times 1024}{4} = 32,768 \, \text{IOPS}
-\]
+
+**IOPS= 128 ×1024 / 4 = 32,768IOPS**
 
 ---
 
