@@ -552,3 +552,98 @@ You have **10 EC2 instances**, each requiring the following: Antivirus software,
 ---
 
 
+---
+
+### **Elastic IP Address (EIP)**
+- **What is EIP?**
+  - A static, public IPv4 address in AWS that you can assign to an EC2 instance or other AWS services.
+  - Unlike a regular public IP, it persists even after stopping/Starting the instance.
+
+- **Features**:
+  1. **Dedicated IP**: Useful for applications requiring a consistent public IP (e.g., hosting a website).
+  2. **Cost Considerations**: **Not free tier eligible**. Charges apply if the EIP is not associated with a running resource.
+
+- **Important Note**:
+  - AWS charges for EIPs that are allocated but not used.
+  - Avoid unnecessary EIP allocation to reduce costs.
+
+---
+
+### **What is a Security Group?**
+- **Definition**:
+  - A virtual firewall for your EC2 instance to control inbound and outbound traffic.
+  - You can specify rules based on protocols, ports, and IP addresses.
+
+- **Types of Rules**:
+  1. **Inbound Rules**:
+     - Define what type of incoming traffic is allowed (e.g., SSH, HTTP).
+  2. **Outbound Rules**:
+     - Define what type of outgoing traffic is allowed (e.g., access to the internet).
+
+- **Common Ports**:
+  | **Port** | **Protocol** | **Purpose**                    |
+  |----------|--------------|--------------------------------|
+  | 22       | SSH          | Secure shell access to the instance. |
+  | 80       | HTTP         | Unsecured web traffic.         |
+  | 443      | HTTPS        | Secured web traffic.           |
+  | 3306     | MySQL        | Database connections.          |
+  | 5432     | PostgreSQL   | Database connections.          |
+  | 3389     | RDP          | Remote Desktop Protocol (Windows). |
+ 
+
+---
+
+### **1. Security Group Overview**
+A Security Group is like the main **security guard** for your house. It decides who can enter (inbound rules) and who can leave (outbound rules). Just like in a house, you can allow specific people in and out based on rules.
+
+---
+
+### **2. Port Numbers**
+Think of port numbers as specific **doors or windows** of your house that serve different purposes. Each door (port) is meant for specific visitors or activities:
+- **Port 22 (SSH):** The **front door key** used by administrators to enter securely.
+- **Port 80 (HTTP):** The **main gate** for public visitors (web traffic).
+- **Port 443 (HTTPS):** The **VIP gate** for encrypted, secure communication.
+
+Just like you don’t want every door in your house to be open for everyone, in EC2, you open specific ports based on the type of traffic you expect.
+
+---
+
+### **3. Inbound Rules**
+Inbound rules decide **who can come into your house** and through which door:
+- **Example:** If you want your friend to come to your house through the main gate (Port 80), you give them permission by adding their **name** (or in EC2, their IP address) to the guest list.
+
+In EC2 terms:
+- Allow **HTTP traffic (Port 80)** from **anyone** (0.0.0.0/0).
+- Allow **SSH traffic (Port 22)** only from your **office network's IP address**.
+
+**Real-world analogy:** A restaurant allowing customers through the front door but keeping the kitchen door locked, only accessible to staff.
+
+---
+
+### **4. Outbound Rules**
+Outbound rules decide **who or what can leave your house**:
+- **Example:** If you're ordering food online, you let your delivery request go out, but you don’t allow random spam emails from your computer.
+
+In EC2 terms:
+- By default, all outbound traffic is allowed, meaning your EC2 instance can communicate freely unless restricted.
+
+**Real-world analogy:** A guest leaving your house after the party. You may allow them to leave through specific exits (e.g., the back gate).
+
+---
+
+### **5. Real-Life Scenarios**
+Here are a few scenarios to simplify understanding:
+- **Scenario 1: Hosting a Website**
+  - You open **Port 80 (HTTP)** or **Port 443 (HTTPS)** to allow public users to access your website.
+  - You may also open **Port 22 (SSH)** but restrict it to your own IP for maintenance.
+
+- **Scenario 2: Secure Communication**
+  - If you're running a private application, you allow **Port 3306** (MySQL) but restrict access to only the application server’s IP.
+
+- **Scenario 3: Blocking Unwanted Visitors**
+  - If you notice unusual traffic (like hackers), you update the rules to block their IP addresses, much like telling your security guard not to let specific people in.
+
+---
+
+
+
