@@ -470,4 +470,85 @@ A snapshot in AWS is a point-in-time backup of an Amazon EBS (Elastic Block Stor
      - FSR ensures that volumes created from DLM-managed snapshots are ready to deliver full performance immediately after creation, eliminating initialization delays.
 
 ---
+### **What is a Custom AMI (Golden AMI) in AWS?**
+
+A **Golden AMI** is a pre-configured, **customized Amazon Machine Image** that includes all required software, configurations, and settings. It allows organizations to standardize deployments, save time, and ensure consistency across EC2 instances.
+
+---
+
+### **Importance of a Golden AMI**
+
+#### **Scenario**:  
+You have **10 EC2 instances**, each requiring the following: Antivirus software, Microsoft Office, Custom WordPress setup, Custom OS users, Applications and IIS server  
+
+**Option 1**:  
+- Launch 10 EC2 instances individually.  
+- Manually configure each instance (install software, customize OS, etc.).  
+- **Result**: Time-consuming, error-prone, and inconsistent configurations.  
+
+**Option 2**:  
+- Launch **1 EC2 instance** and perform all configurations.  
+- Create a **Golden AMI** from this configured instance.  
+- Use the Golden AMI to launch 10 instances.  
+- **Result**: Time-efficient, consistent, and scalable.  
+
+---
+
+### **Steps to Create a Golden AMI**
+
+1. **Launch a Base EC2 Instance**:
+   - Choose an Amazon-provided AMI (e.g., Amazon Linux, Windows Server).  
+   - Configure the instance (e.g., instance type, security groups, etc.).  
+
+2. **Customize the Instance**:
+   - Install required software (e.g., antivirus, MS Office, custom applications).  
+   - Create OS users and set permissions.  
+   - Perform system hardening, such as applying **CIS Benchmarks** for security compliance.  
+   - Configure application settings (e.g., IIS or WordPress).  
+
+3. **Prepare for AMI Creation**:
+   - Clean temporary data and logs to reduce AMI size.  
+   - Stop services or processes that should not run on boot.  
+   - Ensure the instance is **stopped** or in a stable state.  
+
+4. **Create the AMI**:
+   - In the EC2 console, select the instance.  
+   - Choose **Actions → Image and Templates → Create Image**.  
+   - Provide a name and description for the image.  
+   - Optionally, customize volume settings (e.g., size, encryption).  
+
+5. **Validate the AMI**:
+   - Launch a test instance from the AMI.  
+   - Verify that all configurations and software are intact.  
+
+---
+
+### **Golden AMI Use Cases**
+
+1. **Launch Instances in the Same Region**:
+   - Use the Golden AMI to spin up additional instances within the same AWS Region.  
+
+2. **Cross-Region Deployment**:
+   - Copy the Golden AMI to another region using the **"Copy AMI"** feature.  
+   - Launch instances in the target region.  
+
+3. **Cross-Account Sharing**:
+   - Share the Golden AMI with another AWS account using 12 digit account ID.
+   - Share Golden AMI across the Organisation (Multiple AWS accounts)
+     
+4. **Public Sharing**:
+   - Share the Golden AMI publicly for open usage (e.g., community use cases).  
+
+---
+
+### **Golden AMI vs Snapshots**
+
+| Feature             | Golden AMI                         | Snapshot                             |
+|---------------------|------------------------------------|--------------------------------------|
+| **Purpose**         | Full system (OS + Apps + Data)     | Point-in-time backup of an EBS volume |
+| **Deployment**      | Launch EC2 instances               | Restore or create EBS volumes        |
+| **Customization**   | Includes OS and customizations     | Limited to volume content            |
+
+---
+
 
