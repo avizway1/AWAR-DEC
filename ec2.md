@@ -330,7 +330,7 @@ icacls "<path-to-private-key-file>" /grant:r "%USERNAME%:R"
 
 ---
 
-						### **Scenarios for Using Snapshots in AWS**
+						**Scenarios for Using Snapshots in AWS**
 
 _**What is a Snapshot in AWS?**_
 A snapshot in AWS is a point-in-time backup of an Amazon EBS (Elastic Block Store) volume. Snapshots are stored in Amazon S3, though not visible in your S3 bucket, and can be used to back up, restore, or replicate EBS volumes.
