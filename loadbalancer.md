@@ -1,5 +1,3 @@
-### Key Points and Clarifications:
-
 #### **Vertical Scaling**
 - **Definition**: Increasing resources (CPU, memory, storage) of an instance by upgrading its instance type (e.g., from `t2.micro` to `t3.medium`).
 - **Process in AWS**:
