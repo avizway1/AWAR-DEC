@@ -581,15 +581,23 @@ You have **10 EC2 instances**, each requiring the following: Antivirus software,
      - Define what type of outgoing traffic is allowed (e.g., access to the internet).
 
 - **Common Ports**:
-  | **Port** | **Protocol** | **Purpose**                    |
-  |----------|--------------|--------------------------------|
-  | 22       | SSH          | Secure shell access to the instance. |
-  | 80       | HTTP         | Unsecured web traffic.         |
-  | 443      | HTTPS        | Secured web traffic.           |
-  | 3306     | MySQL        | Database connections.          |
-  | 5432     | PostgreSQL   | Database connections.          |
-  | 3389     | RDP          | Remote Desktop Protocol (Windows). |
- 
+
+| **Port** | **Protocol**   | **Purpose**                                |
+|----------|----------------|--------------------------------------------|
+| 20       | FTP            | File Transfer Protocol - Data Transfer.   |
+| 21       | FTP            | File Transfer Protocol - Control.         |
+| 22       | SSH/SFTP       | Secure shell access and secure file transfer. |
+| 53       | DNS            | Domain Name System (name resolution).     |
+| 80       | HTTP           | Unsecured web traffic (regular web browsing). |
+| 389      | LDAP           | Lightweight Directory Access Protocol (directory services). |
+| 443      | HTTPS          | Secured web traffic (secure web browsing). |
+| 636      | LDAPS          | Secure Lightweight Directory Access Protocol. |
+| 3306     | MySQL/MariaDB  | Database connections for MySQL or MariaDB. |
+| 3389     | RDP            | Remote Desktop Protocol (Windows remote access). |
+| 5432     | PostgreSQL     | Database connections for PostgreSQL.       |
+| 8080     | HTTP (Alt)     | Alternative HTTP port, often used for web proxies. |
+| 1433     | MS SQL         | Microsoft SQL Server database connections. |
+
 
 ---
 
