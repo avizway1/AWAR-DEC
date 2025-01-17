@@ -154,4 +154,45 @@ echo "<h1>This is my Second webserver</h1>" > /var/www/html/index.html
 
 #### **Free Tier**
 - ELB offers **750 hours/month** under the free tier.
+  
+---
+### **What is Stickiness in AWS Load Balancers?**
 
+Stickiness, also known as **session persistence**, ensures that a client’s requests are consistently routed to the same target (e.g., an EC2 instance) for the duration of a session. 
+
+AWS Elastic Load Balancers (ELB) support stickiness for **Application Load Balancers (ALB)** using either cookies or custom configurations to track sessions.
+
+---
+
+### **How Stickiness Works**
+1. **Cookie-Based Mechanism**:  
+   - A cookie is issued to the client by the load balancer or application.  
+   - This cookie tracks the session and ensures the client’s subsequent requests are routed to the same target.
+
+2. **Duration Control**:  
+   - Stickiness can be configured for a specific time duration.  
+   - Once the duration expires, the client may be routed to a different target.
+
+3. **Load Balancer Types**:  
+   - **ALB**: Uses **application-controlled** cookies or **load-balancer-generated** cookies for stickiness.  
+
+---
+
+### **Use Cases of Stickiness**
+1. **Session-Specific Applications**:  
+   - **Example**: Online shopping carts or e-commerce sites.  
+   - Ensures user-specific data, such as items in a cart, stays intact by routing all requests to the same backend server.
+
+2. **Applications with In-Memory Data**:  
+   - **Example**: Gaming or financial trading applications.  
+   - Targets maintain session-specific data in memory, which avoids reloading from a database.
+
+3. **User Authentication**:  
+   - **Example**: Social media or enterprise web apps with user authentication.  
+   - Keeps users authenticated without the need to share session data across multiple targets.
+
+---
+
+### **Advantages of Stickiness**
+- Improves **user experience** by maintaining session continuity.
+- Reduces **backend complexity** in handling session data.
