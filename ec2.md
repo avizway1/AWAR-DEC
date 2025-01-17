@@ -645,5 +645,62 @@ Here are a few scenarios to simplify understanding:
 
 ---
 
+### **What is Amazon CloudWatch?**
+Amazon CloudWatch is a powerful monitoring and observability service in AWS. It provides actionable insights by collecting metrics, logs, and events for your AWS resources and applications.
+
+- **Features**:
+  - Monitors various AWS resources such as **EC2, S3, RDS, DynamoDB, Lambda**, and more.
+  - Tracks metrics like **CPU usage, Disk I/O, and Network traffic** for EC2 instances.
+  - Supports custom metrics for monitoring application-specific performance.
+  - Enables **log analysis** using CloudWatch Logs.
+
+- **Memory Monitoring**:
+  - By default, CloudWatch does not monitor **Memory/RAM and OS level Disk Utilization**.
+  - **Solution**: Install and configure the **CloudWatch Agent** on the EC2 instance to collect memory usage and other custom metrics. (Note: This incurs additional costs.)
+
+---
+
+### **Types of Monitoring in CloudWatch**
+1. **Basic Monitoring**:
+   - **Default**: Enabled automatically for supported resources.
+   - **Interval**: Metrics are collected at **5-minute intervals**.
+   - **Cost**: Free.
+
+2. **Detailed Monitoring**:
+   - **Optional**: Must be explicitly enabled.
+   - **Interval**: Metrics are collected at **1-minute intervals**.
+   - **Cost**: Additional charges apply.
+   - **Use Case**: Required for time-sensitive or high-resolution metric monitoring.
+
+---
+
+### **What is a CloudWatch Alarm?**
+A CloudWatch Alarm monitors specific metrics and triggers actions based on predefined thresholds. It integrates with other AWS services to notify you or take automated actions when an issue occurs.
+
+- **How It Works**:
+  1. Define a **metric** to monitor (e.g., CPU Utilization).
+  2. Set a **threshold** (e.g., CPU exceeds 80%).
+  3. Specify an **action** (e.g., send an email or auto-scale instances).
+
+---
+
+### **Common Use Cases for CloudWatch Alarms**
+1. **Resource Monitoring**:
+   - Notify when EC2 **CPU utilization** exceeds 80%.
+   - Alert when **Memory usage** is high (requires CloudWatch Agent).
+   - Trigger actions if an EBS volume is running out of space.
+
+2. **Auto-Scaling**:
+   - Automatically scale EC2 instances up or down based on traffic or workload.
+
+3. **Application Performance**:
+   - Trigger alarms if RDS database connections exceed a safe limit.
+   - Monitor Lambda function invocations and error rates.
+
+4. **Health Monitoring**:
+   - Get alerts for unhealthy targets in an Application Load Balancer (ALB).
+   - Monitor and respond to high error rates in APIs or application logs.
+
+---
 
 
