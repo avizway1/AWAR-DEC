@@ -80,10 +80,6 @@ echo "<h1>This is my Second webserver</h1>" > /var/www/html/index.html
      - Host-based routing.
      - WebSocket.
      - Load balancing for containerized applications.
-   - **Algorithms**:
-     - Round robin.
-     - Least outstanding requests.
-     - IP hash method.
    - **DNS Endpoint**: Provided for connectivity (no dedicated IP).
 
 3. **Network Load Balancer (NLB)**:
@@ -112,26 +108,48 @@ echo "<h1>This is my Second webserver</h1>" > /var/www/html/index.html
 
 ---
 
+### Application Load Balancing Algorithms
+
 ---
 
-### Load Balancing Algorithms (Application and Network ELBs)
 **1. Round Robin**  
    - **How it works**: Requests are distributed equally among all targets (e.g., EC2 instances) in a target group.  
-   - **Best suited for**: Scenarios where all targets have equal capacity and performance.
+   - **Best suited for**: Scenarios where all targets have equal capacity and performance. 
+
+---
 
 **2. Least Outstanding Requests**  
-   - **How it works**: Requests are sent to the target with the fewest outstanding requests.  
+   - **How it works**: Requests are sent to the target with the fewest in-progress tasks or outstanding requests.  
    - **Best suited for**: Workloads with long-running requests, ensuring that no single target becomes overloaded.
 
-**3. IP Hash Method**  
-   - **How it works**: Requests from the same client IP are consistently routed to the same target.  
-   - **Best suited for**: Applications that require session persistence (e.g., shopping carts, login sessions).
+---
 
-**4. Flow Hash (Network ELB)**  
-   - **How it works**: Uses a combination of source IP, destination IP, source port, and destination port to route traffic.  
-   - **Best suited for**: Optimizing traffic distribution across highly dynamic environments.
+### **3. Weighted Random**  
+- **How it Works**: Distributes requests randomly across healthy targets based on assigned weights.  
+  - **Weights**: Determine the proportion of traffic each target should receive.  
+  - **Anomaly Detection**: Identifies issues with targets, and traffic is adjusted accordingly.  
+  - **Anomaly Mitigation**: With **Automatic Target Weights (ATW)** enabled, target weights are automatically adjusted to handle anomalies.  
 
+---
 
+### **Comparison of Algorithms**
+
+| **Algorithm**           | **Best For**                              | **Advantages**                          | **Limitations**                          |
+|--------------------------|-------------------------------------------|------------------------------------------|------------------------------------------|
+| **Round Robin**          | Uniform workloads                        | Simple and predictable                  | Not effective for variable workloads     |
+| **Least Outstanding**    | Varying workload complexities            | Dynamic and responsive                  | Not compatible with Slow Start Duration  |
+| **Weighted Random**      | Adaptive distribution for varying targets| Fault-tolerant, supports anomalies      | Requires additional configuration        |
+
+---
+
+### **AWS Network Load Balancer (NLB) Algorithm**
+
+---
+
+- **Flow Hash Algorithm**:  
+  The NLB uses the **Flow Hash Algorithm** to determine how traffic is distributed across targets.  
+  - It examines network attributes such as the **source IP address**, **destination IP address**, **protocol**, and **source/destination port numbers**.  
+  - A hash is calculated based on these attributes, and traffic is routed consistently to the same target for a given connection (unless the target becomes unhealthy).
 ---
 
 #### **Free Tier**
