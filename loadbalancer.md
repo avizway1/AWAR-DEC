@@ -138,4 +138,3 @@ echo "<h1>This is my Second webserver</h1>" > /var/www/html/index.html
 #### **Free Tier**
 - ELB offers **750 hours/month** under the free tier.
 
-By following this, you'll better understand the nuances of Elastic Load Balancers and their use cases. Let me know if you need a deeper dive into any specific area!
