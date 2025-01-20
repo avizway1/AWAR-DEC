@@ -75,3 +75,36 @@
 2. Verify that password authentication works as expected.  
 
 ---
+### **Task: Application Load Balancer with Multiple Target Groups**  
+
+#### **Objective:**  
+Create an Application Load Balancer (ALB) to deliver multiple applications using separate target groups on port 80 and port 8080.  
+
+#### **Requirements:**  
+1. **Launch EC2 Instances:**  
+   - Launch **two EC2 instances**, install and configure Apache web server to serve content on **port 80**, and register them to **Target Group A**.  
+   - Launch **one EC2 instance**, configure it to serve content on **port 8080**, and register it to **Target Group B**.  
+
+2. **Create an Application Load Balancer:**  
+   - Configure the ALB to route traffic based on port numbers to the corresponding target groups.  
+   - Ensure the ALB has appropriate security group rules to allow HTTP traffic on both ports.  
+
+3. **Target Group Configuration:**  
+   - Target Group A should listen on **port 80** and forward requests to the two Apache instances.  
+   - Target Group B should listen on **port 8080** and forward requests to the single instance.  
+
+4. **Testing:**  
+   - Access the ALB DNS name via a web browser and confirm that both applications are accessible via:  
+     - `http://<ALB-DNS>` → Should serve content from the instances in Target Group A.  
+     - `http://<ALB-DNS>:8080` → Should serve content from the instance in Target Group B.  
+
+---
+
+**Expected Deliverables:**  
+- EC2 instances running and serving content.  
+- ALB properly configured to forward traffic to the appropriate target groups.  
+- Validation screenshots showing application accessibility through the ALB.  
+
+---
+
+Complete the task and verify that the applications are accessible via the ALB with the correct routing configurations.
