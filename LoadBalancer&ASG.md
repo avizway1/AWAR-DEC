@@ -213,7 +213,7 @@ ASG helps automatically adjust the number of EC2 instances to maintain applicati
 
 2. **Create an Elastic Load Balancer (ELB):**  
    - Create an **Application Load Balancer (ALB)** or **Network Load Balancer (NLB)**.  
-   - Register target groups to distribute traffic across EC2 instances.  
+   - Register target groups to distribute traffic across EC2 instances, that we launch in next steps.  
    - Ensure health checks are properly configured.
 
 3. **Create an Auto Scaling Group (ASG):**  
