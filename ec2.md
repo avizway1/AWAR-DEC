@@ -711,4 +711,91 @@ A CloudWatch Alarm monitors specific metrics and triggers actions based on prede
 
 ---
 
+### **AWS EFS (Elastic File System) Overview**  
+EFS is a **fully managed, scalable, and elastic file storage system** designed to provide shared access across multiple EC2 instances.
+
+---
+
+### **Key Features:**  
+- **Protocol:**  
+  - Works with **NFS v4.1/v4.0**, using port **2049** for communication.  
+  - Supports **Linux-based operating systems only.**  
+  - For Windows, AWS FSx (using SMB protocol) is recommended.  
+
+- **Scalability:**  
+  - No pre-provisioning required; storage grows and shrinks automatically.  
+  - Can handle petabytes of data seamlessly.  
+
+- **Performance Modes:**  
+  1. **General Purpose (default)** – Suitable for most workloads.  
+  2. **Max I/O** – Designed for high throughput and parallel operations.  
+
+- **Throughput Modes:**  
+  1. **Bursting (default):** Performance scales with the size of the file system.  
+  2. **Provisioned:** Fixed throughput, useful for high-performance needs.  
+
+---
+
+### **Mounting EFS on EC2 Instances**  
+
+#### **Step 1: Create a mount directory**  
+```bash
+mkdir /server1
+```
+
+#### **Step 2: Mount the EFS file system**  
+```bash
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0b7b1937bf7ebbeb6.efs.ap-south-1.amazonaws.com:/ /server1
+```
+
+**Explanation of mount options:**  
+- `-t nfs4` → Specifies the NFS version.  
+- `nfsvers=4.1` → Specifies NFS version 4.1.  
+- `rsize/wsize=1048576` → Read/write buffer size in bytes.  
+- `hard` → Ensures operations retry indefinitely in case of failures.  
+- `timeo=600` → Timeout in deciseconds before retrying an operation.  
+- `retrans=2` → Number of retries before giving up.  
+- `noresvport` → Uses a new dynamic source port for each connection.  
+
+---
+
+### **Persistent Mount Using `/etc/fstab`**  
+To ensure the EFS mount persists after reboot, add the following entry in the `/etc/fstab` file:
+
+```bash
+fs-0b7b1937bf7ebbeb6.efs.ap-south-1.amazonaws.com:/ /server1 nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 0 0
+```
+
+You can verify active mounts using:
+
+```bash
+cat /etc/mtab
+```
+
+---
+
+### **Security Group Configuration for EFS**  
+To allow EC2 instances to connect to EFS, create a security group with inbound rules allowing **NFS (port 2049)**. Options include:
+
+1. **Open to the entire VPC CIDR block:**  
+   - Allows any instance within the VPC to connect.  
+   - Example: `10.0.0.0/16` (depends on your VPC CIDR).  
+
+2. **Allow specific EC2 private IP addresses:**  
+   - Use instance-specific private IPs in the rule to restrict access.  
+
+3. **Reference EC2 security groups (recommended):**  
+   - The most secure approach:  
+   - Allow inbound traffic from EC2's security group instead of IP-based rules.  
+
+---
+
+### **Use Cases for AWS EFS**  
+- Centralized storage for multiple EC2 instances (e.g., web servers).  
+- Application data sharing across different environments.  
+- Backup and archival purposes.  
+- Scalable storage solution for containerized applications (ECS/EKS).  
+
+---
+
 
