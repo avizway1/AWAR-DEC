@@ -107,4 +107,86 @@ Create an Application Load Balancer (ALB) to deliver multiple applications using
 
 ---
 
-Complete the task and verify that the applications are accessible via the ALB with the correct routing configurations.
+### **AWS Task Questions Format**  
+
+---
+
+#### **Task 1: Configure Pipeline Mechanism Between EC2 Instances and ELB**  
+
+**Objective:**  
+Set up a load balancer to serve traffic only through the ELB, ensuring direct instance access is restricted.  
+
+**Requirements:**  
+1. **Security Group Configuration:**  
+   - Modify the EC2 instance security group to allow port 80 traffic only from the ELB security group.  
+
+2. **Access Testing:**  
+   - Verify that accessing the instance directly via its IP does **not** serve the webpage.  
+   - Ensure that accessing the application via the ELB DNS name works correctly.  
+
+
+---
+
+#### **Task 2: Create an Auto Scaling Group (ASG) and Set Desired Count**  
+
+**Objective:**  
+Deploy an Auto Scaling Group with a defined desired count of instances and verify its functionality.  
+
+**Requirements:**  
+1. **Auto Scaling Group Setup:**  
+   - Create an ASG and set the desired capacity to **2** instances.  
+
+2. **Verification:**  
+   - Confirm that two instances are launched and running as expected.  
+
+3. **Cleanup:**  
+   - Ensure the Auto Scaling Group is deleted after testing to avoid unnecessary costs.  
+
+
+---
+
+#### **Task 3: Create an ASG Using a V1 Launch Template with Scaling Policies**  
+
+**Objective:**  
+Create an Auto Scaling Group with a launch template and configure scaling policies.  
+
+**Requirements:**  
+1. **Launch Template Creation:**  
+   - Create a V1 launch template.  
+   - Set the desired capacity to **2** instances.  
+   - Deploy and verify the instances.  
+
+2. **Scaling Policies:**  
+   - Configure an alarm to reduce desired capacity to **1** instance when CPU utilization is ≤10%.  
+
+3. **Scheduled Scaling:**  
+   - Configure a scheduled action to increase the desired capacity to **3** instances at a specified time.  
+
+4. **Verification:**  
+   - Monitor and confirm automatic scaling behavior based on conditions and schedules.  
+
+**Expected Deliverables:**  
+- Auto Scaling Group with applied scaling policies and scheduled actions.  
+- Observations on scaling adjustments based on alarms and schedules.  
+
+---
+
+#### * Task: Load Testing with Stress Command**  
+
+**Objective:**  
+Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.  
+
+**Steps:**  
+1. Run the stress command (Check the number of CPU cores using "nproc" command): 
+ 
+   ```bash
+   stress --cpu 1 --timeout 900
+   ``` 
+   
+3. Observe scaling behavior based on increased load.  
+
+**Expected Deliverables:**  
+- System metrics showing CPU utilization.  
+- Observations on scaling responses under load.  
+
+---
