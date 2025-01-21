@@ -797,5 +797,58 @@ To allow EC2 instances to connect to EFS, create a security group with inbound r
 - Scalable storage solution for containerized applications (ECS/EKS).  
 
 ---
+### **AWS Placement Groups Overview**  
+AWS **Placement Groups** are logical groupings of EC2 instances that influence how instances are placed on underlying hardware. They help optimize performance, reduce latency, or improve fault tolerance, depending on the workload requirements.
+
+---
+
+### **Types of Placement Groups:**  
+
+#### **1. Cluster Placement Group**  
+A **Cluster Placement Group (CPG)** places instances close together within a **single Availability Zone** to achieve **low-latency and high-throughput performance.**  
+
+**Best suited for:**  
+- Applications requiring **high network throughput** and **low latency.**  
+- Big data applications (e.g., Hadoop clusters).  
+- High-performance computing (HPC).  
+- Distributed databases.
+
+---
+
+#### **2. Partition Placement Group**  
+A **Partition Placement Group (PPG)** divides instances into **multiple isolated partitions** across multiple racks within an Availability Zone. Each partition is isolated from failures in other partitions.  
+
+**Best suited for:**  
+- Distributed and fault-tolerant applications (e.g., Hadoop, Kafka, Cassandra).  
+- Large-scale distributed applications that need redundancy.  
+- Workloads where failures should be isolated to specific partitions.
+
+
+---
+
+#### **3. Spread Placement Group**  
+A **Spread Placement Group (SPG)** places instances across **distinct hardware racks**, ensuring that each instance is on a separate rack with its own power and network.  
+
+**Best suited for:**  
+- Applications requiring **high availability** and **minimal risk of simultaneous failure.**  
+- Critical workloads such as financial applications, monitoring systems, or microservices.  
+- Small deployments requiring fault tolerance (up to 7 instances per AZ).  
+
+---
+
+### **Choosing the Right Placement Group**  
+1. **Choose Cluster Placement Group if:**  
+   - You need low-latency, high-speed network connectivity.  
+   - Your workload is tightly coupled and requires high throughput.  
+
+2. **Choose Partition Placement Group if:**  
+   - You need fault isolation within distributed applications.  
+   - You are running big data clusters with failure resilience.  
+
+3. **Choose Spread Placement Group if:**  
+   - You need to minimize risk by placing instances on separate hardware.  
+   - You have a smaller number of critical instances requiring isolation.  
+
+---
 
 
