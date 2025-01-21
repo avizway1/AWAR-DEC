@@ -196,3 +196,131 @@ AWS Elastic Load Balancers (ELB) support stickiness for **Application Load Balan
 ### **Advantages of Stickiness**
 - Improves **user experience** by maintaining session continuity.
 - Reduces **backend complexity** in handling session data.
+
+---
+
+### **Auto Scaling Group (ASG) Overview**
+ASG helps automatically adjust the number of EC2 instances to maintain application availability and optimize costs. It works with different scaling policies to handle workload variations.
+
+---
+
+### **Steps to Set Up an ASG**
+
+1. **Create a Golden AMI:**  
+   - Launch an EC2 instance, install required software and configurations.  
+   - Create an AMI (Amazon Machine Image) from the configured instance.  
+   - This AMI will be used to launch multiple instances.
+
+2. **Create an Elastic Load Balancer (ELB):**  
+   - Create an **Application Load Balancer (ALB)** or **Network Load Balancer (NLB)**.  
+   - Register target groups to distribute traffic across EC2 instances.  
+   - Ensure health checks are properly configured.
+
+3. **Create an Auto Scaling Group (ASG):**  
+   - **Step 1:** Create a **Launch Template** with:  
+     - The Golden AMI.  
+     - Instance type (e.g., `t2.micro`).  
+     - Security Group.  
+     - Key pair for SSH access.  
+   - **Step 2:** Configure ASG:  
+     - Attach ELB to distribute traffic.  
+     - Set the desired, minimum, and maximum instance counts.  
+     - Define scaling policies (manual, scheduled, or dynamic).
+
+---
+
+### **ASG Scaling Policies**
+
+1. **Dynamic Scaling:** Automatically adjusts the number of instances based on real-time metrics.  
+   - **Types:**  
+     - **Step Scaling:** Adds/removes instances based on threshold values.  
+     - **Simple Scaling:** Adds/removes instances based on a CloudWatch alarm trigger.  
+     - **Target Tracking Scaling:** Maintains a specific metric target (e.g., CPU utilization at 50%).  
+
+2. **Scheduled Scaling:** Adds/removes instances at specific times (e.g., scale up at 9 AM, scale down at 6 PM).  
+
+3. **Manual Scaling:** Manually change the desired capacity at any time.  
+
+---
+
+### **Scale In vs. Scale Out**
+
+- **Scale Out:** Adds instances to ASG when demand increases.  
+- **Scale In:** Removes instances when demand decreases.  
+
+---
+
+### **ASG Termination Policy (How ASG Chooses Instances to Terminate)**
+
+When a **Scale-In** action is triggered, ASG follows these policies in order:
+
+1. **Default Termination Policy (Recommended)**  
+   - Chooses instances from the oldest launch template/configuration.  
+   - Then selects the instance closest to the next billing hour to reduce cost.  
+   - Lastly, evenly distributes instances across Availability Zones (AZs).
+
+2. **Specific Termination Policies (Can be set by the user):**  
+   - **OldestInstance:** Terminates the oldest running instance.  
+   - **NewestInstance:** Terminates the most recently launched instance.  
+   - **OldestLaunchTemplate:** Removes instances created with older launch templates.  
+   - **Availability Zone Rebalancing:** Terminates instances to maintain balance across AZs.  
+   - **ClosestToBillingHour:** Selects instances that are about to reach a full billing hour.
+
+---
+
+### **Upgrading Instance Type with Zero Downtime (e.g., from `t2.micro` to `t2.nano`)**
+
+#### Steps to perform instance upgrade:
+
+1. **Create a New Launch Template:**  
+   - Use the existing Golden AMI.  
+   - Change the instance type from `t2.micro` to `t2.nano`.  
+
+2. **Update ASG with New Launch Template:**  
+   - Edit the ASG and associate the new launch template.  
+   - Set the **desired capacity to 2** (to create new instances without downtime).
+
+3. **Terminate the Old Instances Gradually:**  
+   - ASG will automatically launch new instances with the updated settings.  
+   - Once new instances are healthy, terminate the old ones manually or let ASG handle it.
+
+---
+
+### **Best Practices for ASG**
+- Use **Target Tracking** for automated scaling based on metrics like CPU usage.  
+- Distribute instances across multiple AZs for high availability.  
+- Implement **termination policies** carefully to avoid unintended instance terminations.  
+- Enable **ELB health checks** to ensure only healthy instances receive traffic.  
+- Monitor ASG activities using **CloudWatch alarms** and logs.
+
+---
+
+### **What is the Cooldown Period in Auto Scaling Groups (ASG)?**  
+
+The **cooldown period** in an Auto Scaling Group (ASG) is a waiting time after a scaling activity (scale in or scale out) to allow the system to stabilize before triggering another scaling action.  
+
+During this period, ASG temporarily **pauses scaling actions** to prevent unnecessary scale-ins or scale-outs due to transient spikes in metrics like CPU utilization.  
+
+---
+
+### **How the Cooldown Period Works:**
+1. The ASG triggers a scaling activity (e.g., adds an instance due to high CPU usage).  
+2. The cooldown period starts (e.g., 300 seconds).  
+3. During this period, ASG ignores further scaling triggers to allow the system to stabilize.  
+4. Once the cooldown period expires, ASG resumes normal monitoring and responds to new scaling triggers.  
+
+---
+
+### **Example Scenario:**
+Imagine an ASG scaling policy to scale out when CPU usage exceeds 70%.  
+- ASG launches an additional instance.  
+- A 300-second cooldown is applied.  
+- During the cooldown, even if CPU crosses 70% again, no new instance will be launched.  
+- After 300 seconds, ASG evaluates the CPU usage again and acts accordingly.  
+
+---
+
+### **Use Case for Cooldown Period**
+- **Prevent rapid fluctuations (flapping):** Avoid launching and terminating instances too quickly due to metric spikes.  
+- **Handling slow-start applications:** If your app takes time to boot up, a longer cooldown period allows it to stabilize before another action is taken.  
+- **Optimizing cost:** Prevent unnecessary scaling actions that might increase costs.  
