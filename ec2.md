@@ -903,3 +903,165 @@ A **Spread Placement Group (SPG)** places instances across **distinct hardware r
    `T-LIN-HD-HD`  
 
 ---
+
+---
+
+### **AWS EventBridge Overview**  
+AWS EventBridge is a **serverless event bus** that helps applications to respond to system changes in **real-time**. It allows event-driven architectures by routing events from AWS services and custom applications to various targets like Lambda, SQS, and SNS.  
+
+---
+
+### **Key Features of EventBridge:**  
+1. **Event-Driven Processing:**  
+   - Responds to AWS resource state changes (e.g., EC2 instance state change, S3 object creation).  
+
+2. **Scheduled Processing:**  
+   - Runs tasks on a defined schedule using **cron expressions** or rate-based rules.  
+
+3. **Triggers Both Scheduled & Event-Driven Actions:**  
+   - Combines event-driven and scheduled invocations in a single workflow.  
+
+---
+
+### **EventBridge Example Event Structure**  
+
+#### **Sample EC2 Instance State-Change Event:**  
+```json
+{
+  "version": "0",
+  "id": "eec4eda2-6639-e7b3-150d-c6461f1f0686",
+  "detail-type": "EC2 Instance State-change Notification",
+  "source": "aws.ec2",
+  "account": "501170964283",
+  "time": "2022-04-08T02:59:33Z",
+  "region": "ap-south-1",
+  "resources": [
+    "arn:aws:ec2:ap-south-1:501170964283:instance/i-00f56eba78b7b4e65"
+  ],
+  "detail": {
+    "instance-id": "i-00f56eba78b7b4e65",
+    "state": "stopped"
+  }
+}
+```
+
+#### **Input Path Mapping Example:**  
+To extract specific fields from the event and pass them to the target.  
+```json
+{
+  "instance-id": "$.detail.instance-id",
+  "state": "$.detail.state",
+  "time": "$.time",
+  "region": "$.region",
+  "account": "$.account"
+}
+```
+
+#### **Input Template Example:**  
+Defines how the event details should be formatted before sending to a target.  
+```text
+"At <time>, Status of your EC2 instance <instance-id> in the AWS Region <region> has changed to <state>."
+```
+
+---
+
+### **EventBridge Rule Types**  
+
+#### **1. Event-Driven Rules:**  
+Triggers an event when a specific action occurs in AWS services (e.g., EC2 instance stops, S3 object upload).  
+- Example use cases:  
+  - Trigger a Lambda function when an EC2 instance state changes.  
+  - Send an SNS notification when an S3 file is uploaded.  
+
+#### **2. Scheduled Rules (Crontab Format):**  
+Runs periodically based on a defined schedule using **cron expressions or rate-based rules**.
+
+---
+
+### **AWS EventBridge Crontab Format**  
+
+EventBridge cron expressions follow this syntax:
+
+```
+cron(Minutes Hours Day-of-Month Month Day-of-Week Year)
+```
+
+| Field          | Values                    | Wildcards        |
+|----------------|---------------------------|------------------|
+| Minutes        | 0–59                        | , - * /          |
+| Hours          | 0–23                        | , - * /          |
+| Day of Month   | 1–31                        | , - * ? / L W     |
+| Month          | 1–12 or JAN-DEC              | , - * /          |
+| Day of Week    | 1–7 or SUN-SAT                | , - * ? / L #     |
+| Year           | 1970–2199 (optional)         | , - * /          |
+
+---
+
+### **Examples of EventBridge Cron Expressions:**  
+
+| Cron Expression          | Meaning                                              |
+|-------------------------|------------------------------------------------------|
+| `cron(0 12 * * ? *)`      | Every day at 12 PM UTC                               |
+| `cron(0 18 ? * MON-FRI *)`| Every weekday (Monday-Friday) at 6 PM UTC            |
+| `cron(0 9 1 * ? *)`       | On the 1st day of every month at 9 AM UTC            |
+| `cron(0 0 * * ? *)`       | Every day at midnight UTC                            |
+| `cron(*/10 * * * ? *)`    | Every 10 minutes                                     |
+| `cron(0 22 L * ? *)`      | Last day of every month at 10 PM UTC                 |
+
+**Special Characters Explanation:**  
+
+- `*` → Any value  
+- `?` → No specific value (used in Day of Month or Day of Week fields)  
+- `-` → Range (e.g., 1-5 for Monday to Friday)  
+- `/` → Step values (e.g., */5 in Minutes field means every 5 minutes)  
+- `L` → Last day of month/week  
+- `#` → nth day of the month (e.g., 3#2 means the second Wednesday of the month)  
+
+**Useful links for cron expressions:**  
+- [AWS Scheduled Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html)  
+- [EventBridge Cron Expressions](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html#eb-cron-expressions)
+
+---
+
+### **Common EventBridge Use Cases:**  
+
+1. **Automating EC2 Actions:**  
+   - Start/stop EC2 instances at specific times using scheduled rules.  
+
+2. **Monitoring and Notifications:**  
+   - Send an SNS alert when an IAM policy is modified.  
+
+3. **Pipeline Automation:**  
+   - Trigger a CodePipeline build when a new code commit is pushed.  
+
+4. **Security Compliance:**  
+   - Detect security group changes and log them to CloudWatch Logs.  
+
+---
+
+### **How to Set Up an EventBridge Rule (Steps)**  
+
+1. **Go to AWS EventBridge in the AWS Console.**  
+2. **Create a new rule:**  
+   - Name: `EC2-State-Change`  
+   - Event Source: `AWS Services` → `EC2`  
+   - Event Pattern: Define JSON pattern for EC2 state changes.  
+3. **Select Target:**  
+   - Choose AWS Lambda, SNS, or SQS to process the event.  
+4. **Define Input Transformer (Optional):**  
+   - Use an input path and template to customize event data.  
+5. **Enable Rule and Save.**  
+
+---
+
+### **EventBridge vs CloudWatch Events**  
+AWS EventBridge is an evolved version of CloudWatch Events with additional features such as:  
+
+| Feature               | EventBridge                      | CloudWatch Events             |
+|----------------------|---------------------------------|-------------------------------|
+| Third-party Integrations | Supports SaaS apps (e.g., Zendesk) | Limited AWS integrations only  |
+| Schema Registry      | Yes                             | No                            |
+| Input Transformation | Yes                             | No                            |
+| Pricing              | Based on event ingestion        | Based on rule invocations     |
+
+---
