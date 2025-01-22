@@ -851,4 +851,55 @@ A **Spread Placement Group (SPG)** places instances across **distinct hardware r
 
 ---
 
+### Standard Naming Formats we use in Organisation:
 
+**`[Environment]-[Platform]-[ApplicationType]-[InstanceRole]-[ClientID]`**  
+
+###Component Breakdown:
+
+1. **Platform Abbreviations**  
+   - `WIN` for Windows (instead of `wi` for better readability)  
+   - `LIN` for Linux (instead of `li`)
+
+2. **Environment Abbreviations (Keep concise)**  
+   - `P` → Production  
+   - `U` → UAT  
+   - `Q` → QA  
+   - `D` → Development  
+   - `T` → Training  
+
+3. **Application Type**  
+   - `APP` → Application Server  
+   - `DB` → Database Server  
+   - `WEB` → Web Server  
+   - `HD` → Hadoop  
+   - `AD` → Active Directory  
+   - `AD1` → AD Server 1/2
+   - `AP` → Application Processing
+
+4. **Instance Role (Be more descriptive if needed)**  
+   - `WT` → Web Tier  
+   - `AP` → Application Tier  
+   - `DB` → Database Tier  
+   - `FS` → File Server  
+
+5. **Client ID (Flexible numeric or alphanumeric representation)**  
+   - `C1, C2, etc.`  
+
+---
+
+### Example Naming Conventions:
+
+1. **Production Windows Application Server for Client 1:**  
+   `P-WIN-APP-AD-C1`  
+
+2. **Development Linux Web Tier for Client 2:**  
+   `D-LIN-WEB-WT-C2`  
+
+3. **UAT Windows Database Server for Client 3:**  
+   `U-WIN-DB-DB-C3`  
+
+4. **Training Linux Hadoop Server:**  
+   `T-LIN-HD-HD`  
+
+---
