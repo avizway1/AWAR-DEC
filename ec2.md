@@ -853,54 +853,54 @@ A **Spread Placement Group (SPG)** places instances across **distinct hardware r
 
 ### Standard Naming Formats we use in Organisation:
 
-**`[Environment]-[Platform]-[ApplicationType]-[InstanceRole]-[ClientID]`**  
-
-###Component Breakdown:
-
-1. **Platform Abbreviations**  
-   - `WIN` for Windows (instead of `wi` for better readability)  
-   - `LIN` for Linux (instead of `li`)
-
-2. **Environment Abbreviations (Keep concise)**  
-   - `P` → Production  
-   - `U` → UAT  
-   - `Q` → QA  
-   - `D` → Development  
-   - `T` → Training  
-
-3. **Application Type**  
-   - `APP` → Application Server  
-   - `DB` → Database Server  
-   - `WEB` → Web Server  
-   - `HD` → Hadoop  
-   - `AD` → Active Directory  
-   - `AD1` → AD Server 1/2
-   - `AP` → Application Processing
-
-4. **Instance Role (Be more descriptive if needed)**  
-   - `WT` → Web Tier  
-   - `AP` → Application Tier  
-   - `DB` → Database Tier  
-   - `FS` → File Server  
-
-5. **Client ID (Flexible numeric or alphanumeric representation)**  
-   - `C1, C2, etc.`  
+`[Environment]-[Platform]-[ServiceType]-[ComponentRole]-[ClientID]`  
 
 ---
 
-### Example Naming Conventions:
+### **Refined Component Breakdown:**  
 
-1. **Production Windows Application Server for Client 1:**  
-   `P-WIN-APP-AD-C1`  
+#### **1. Platform (Unchanged)**  
+- **WIN** → Windows  
+- **LIN** → Linux  
 
-2. **Development Linux Web Tier for Client 2:**  
-   `D-LIN-WEB-WT-C2`  
+#### **2. Environment (Unchanged)**  
+- **P** → Production  
+- **U** → UAT  
+- **Q** → QA  
+- **D** → Development  
+- **T** → Training  
 
-3. **UAT Windows Database Server for Client 3:**  
-   `U-WIN-DB-DB-C3`  
+#### **3. Service Type (Broad functional category)**  
+- **APP** → Application Server  
+- **DBS** → Database Server  
+- **WEB** → Web Server  
+- **HDP** → Hadoop Platform  
+- **DIR** → Directory Services (Active Directory, LDAP, etc.)  
+- **FSR** → File Storage  
 
-4. **Training Linux Hadoop Server:**  
-   `T-LIN-HD-HD`  
+#### **4. Component Role (Specific function within the service type)**  
+- **SRV** → General Server (if role isn't tier-specific)  
+- **FRNT** → Frontend Server (for web-facing roles)  
+- **BACK** → Backend Server (for app roles)  
+- **PROC** → Processing Server (for batch jobs, etc.)  
+- **DC** → Domain Controller (for directory services)  
+- **NS** → Name Server (for DNS-related roles)  
+
+---
+
+### **Example Naming Conventions:**  
+
+**Production Windows Web Frontend Server for Client 1:**  
+`P-WIN-WEB-FRNT-C1`  
+
+**Development Linux Application Backend Server for Client 2:**  
+`D-LIN-APP-BACK-C2`  
+
+**UAT Windows Database Server for Client 3:**  
+`U-WIN-DBS-SRV-C3`  
+
+**Training Linux Hadoop Processing Server:**  
+`T-LIN-HDP-PROC`  
 
 ---
 
