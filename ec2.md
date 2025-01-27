@@ -1065,3 +1065,182 @@ AWS EventBridge is an evolved version of CloudWatch Events with additional featu
 | Pricing              | Based on event ingestion        | Based on rule invocations     |
 
 ---
+### **AWS Elastic Beanstalk Overview**  
+
+**AWS Elastic Beanstalk (EB)** is a **Platform-as-a-Service (PaaS)** offering that allows developers to **deploy, manage, and scale applications** without worrying about the underlying infrastructure. It provides a simple way to host web applications by automating the provisioning of AWS resources such as EC2, ELB, Auto Scaling, and RDS.
+
+---
+
+### **Why Do We Use AWS Elastic Beanstalk?**  
+
+Elastic Beanstalk is primarily used for:  
+
+1. **Quick Deployment:**  
+   - Developers can focus on writing code while AWS handles deployment, scaling, and monitoring.  
+   
+2. **Managed Infrastructure:**  
+   - AWS provisions and manages resources like EC2 instances, Elastic Load Balancers (ELB), and Auto Scaling Groups (ASG) automatically.  
+
+3. **Support for Multiple Languages:**  
+   - It provides preconfigured environments for popular programming languages, including:  
+     - Python  
+     - Java  
+     - Go  
+     - Ruby  
+     - PHP  
+     - .NET  
+
+4. **Automatic Scaling:**  
+   - Beanstalk automatically scales applications based on demand by adjusting EC2 instances using Auto Scaling.  
+
+5. **Built-in Monitoring:**  
+   - Provides built-in integration with **Amazon CloudWatch** for application and infrastructure monitoring.  
+
+6. **Environment Management:**  
+   - Supports different environments (development, staging, production) with easy rollbacks and updates.  
+
+7. **Integration with AWS Services:**  
+   - Easily integrates with **RDS, S3, DynamoDB, CloudWatch, and IAM**, making it a convenient choice for full-stack applications.  
+
+8. **Zero Cost for Elastic Beanstalk Service:**  
+   - You only pay for the underlying AWS resources (EC2, ELB, S3, etc.), while Beanstalk itself is free.  
+
+---
+
+### **How AWS Elastic Beanstalk Works**  
+
+1. **Upload Code:**  
+   - Developers upload their application code via the AWS Management Console, CLI, or CI/CD pipelines.  
+
+2. **Environment Creation:**  
+   - Beanstalk provisions necessary resources like EC2 instances, security groups, databases, and more.  
+
+3. **Deployment & Scaling:**  
+   - Automatically handles deployment and adjusts resources based on load.  
+
+4. **Monitoring & Logging:**  
+   - Provides health checks, logging, and monitoring to track performance and failures.  
+
+5. **Application Updates:**  
+   - Developers can easily push new code updates without downtime using rolling or immutable deployments.  
+
+---
+
+### **Limitations of AWS Elastic Beanstalk**  
+
+1. **Limited OS-Level Customizations:**  
+   - Elastic Beanstalk provides limited access to the underlying OS, making it challenging to install custom software or dependencies outside the predefined platform.  
+
+2. **Single Application Per Environment:**  
+   - Each Elastic Beanstalk environment supports only one application, which can be a limitation for microservices-based architectures.  
+
+3. **Less Control Over Infrastructure:**  
+   - Since AWS manages most of the infrastructure, it might not be suitable for applications requiring fine-grained infrastructure control.  
+
+4. **Potential Vendor Lock-In:**  
+   - Applications tightly coupled with AWS services may face migration challenges to other cloud platforms.  
+
+---
+
+### **When to Use AWS Elastic Beanstalk?**  
+
+You should consider using AWS Elastic Beanstalk when:  
+
+- You need a **fast and easy way to deploy web applications** without infrastructure management.  
+- You prefer AWS to **handle resource provisioning and scaling automatically.**  
+- Your application is **compatible with one of the supported programming languages.**  
+- You want to focus more on development rather than infrastructure management.  
+- You are running **monolithic applications** and don’t need advanced microservices architectures.  
+
+---
+
+### **Additional Key Points About Elastic Beanstalk**  
+
+- **Environment Types:**  
+  - **Web Server Environment:** Handles HTTP/S requests with ELB and Auto Scaling.  
+  - **Worker Environment:** Asynchronous background processing using Amazon SQS.  
+
+- **Infrastructure Customization via `.ebextensions`:**  
+  - YAML/JSON-based configuration files allow customizing resources such as instance types, security groups, and environment variables.  
+
+- **CI/CD Integration:**  
+  - Elastic Beanstalk can be integrated with GitHub Actions, AWS CodePipeline, Jenkins, etc. for automated deployments.  
+
+- **Multi-AZ Deployments:**  
+  - Applications can be deployed across multiple AWS availability zones for high availability.  
+
+---
+**Instance Isolation in AWS**  
+
+AWS provides different tenancy options to ensure instance isolation based on security, compliance, and performance needs. The two primary tenancy options are **Shared Tenancy** and **Dedicated Tenancy**, which further includes **Dedicated Instances** and **Dedicated Hosts.**  
+
+---
+
+### **1. Shared Tenancy (Default Option)**  
+- **Definition:**  
+  In shared tenancy, your EC2 instance runs on physical hardware that is shared with other AWS customers.  
+- **Key Points:**  
+  - Cost-effective as you pay only for your instance usage.  
+  - AWS manages the physical hardware and ensures isolation using virtualization.  
+  - Suitable for most workloads that do not have strict compliance or licensing requirements.  
+- **Use Cases:**  
+  - General-purpose applications.  
+  - Web applications, test environments, and microservices that do not require dedicated resources.  
+
+---
+
+### **2. Dedicated Tenancy (Enhanced Isolation)**  
+
+Dedicated tenancy ensures that your instances run on hardware dedicated only to your AWS account, enhancing security and compliance. It comes in two variants:  
+
+#### **a. Dedicated Instances**  
+- **Definition:**  
+  AWS provides instances that run on dedicated physical servers, but you don't have control over the underlying hardware management.  
+- **Key Points:**  
+  - Isolation from other AWS customers.  
+  - AWS manages hardware allocation.  
+  - Billing is per instance, with an additional charge for dedicated tenancy.  
+  - No visibility into physical resource details.  
+- **Use Cases:**  
+  - Applications requiring regulatory compliance (e.g., HIPAA, PCI-DSS).  
+  - Enhanced security needs.  
+  - Workloads where shared resources are not allowed.  
+
+#### **b. Dedicated Hosts**  
+- **Definition:**  
+  Provides a physical EC2 server fully dedicated to your account, giving you complete control over instance placement and allowing software license optimization.  
+- **Key Points:**  
+  - Enables control over instance placement on the physical host.  
+  - Helps meet strict licensing requirements (e.g., Oracle, Windows Server).  
+  - Supports Bring Your Own License (BYOL) models.  
+  - Visibility into hardware attributes such as host ID, sockets, and cores.  
+- **Use Cases:**  
+  - Applications with **strict compliance and licensing** needs.  
+  - Software requiring **per-core or per-socket** licensing (e.g., SQL Server, SAP).  
+  - Workloads needing high security and physical separation.  
+
+---
+
+### **Comparison of Shared Tenancy vs. Dedicated Instances vs. Dedicated Hosts**
+
+| Feature             | Shared Tenancy             | Dedicated Instances          | Dedicated Hosts              |
+|--------------------|---------------------------|------------------------------|------------------------------|
+| Cost               | Lowest                     | Higher (instance-level pricing) | Highest (per host pricing)     |
+| Isolation Level    | Virtualized Isolation      | Physical Isolation             | Complete Physical Isolation  |
+| Hardware Control   | No                         | No                             | Yes                           |
+| Licensing Options  | AWS-provided only          | Limited BYOL options           | Full BYOL support             |
+| Use Case Example   | Web applications           | Regulated industries            | Specialized workloads         |
+| Billing            | Per instance               | Per instance + dedicated charge | Per host (flat rate)          |
+
+---
+
+### **How to Choose the Right Tenancy Option?**  
+
+Choose based on:  
+
+- **Security and Compliance:** If strict compliance is needed, go for **Dedicated Hosts.**  
+- **Cost Sensitivity:** Use **Shared Tenancy** for cost efficiency.  
+- **Licensing Needs:** If running licensed software, prefer **Dedicated Hosts.**  
+- **Performance Isolation:** Use **Dedicated Instances** for workloads that require isolated hardware.  
+
+---
