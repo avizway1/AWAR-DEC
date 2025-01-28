@@ -1170,6 +1170,225 @@ You should consider using AWS Elastic Beanstalk when:
   - Applications can be deployed across multiple AWS availability zones for high availability.  
 
 ---
+### **AWS CLI (Command Line Interface)**  
+
+**What is AWS CLI?**  
+AWS CLI is a command-line tool that allows users to interact with AWS services by running commands in a terminal or command prompt. It provides a unified interface to manage AWS resources, automate tasks, and execute operations programmatically.  
+
+- **Programmatic Access:** Works by configuring an **Access Key ID** and **Secret Access Key** (IAM credentials).  
+- **Commands Structure:** The CLI uses structured commands like `aws <service-name> <operation>` to interact with AWS.  
+
+---
+
+### **Significance of AWS CLI in Real-World Scenarios**  
+1. **Automation:**  
+   CLI commands can be incorporated into scripts to automate repetitive tasks like resource creation, backups, and deployments.  
+
+2. **Granular Control:**  
+   Fine-tuned operations like downloading specific objects from S3 or managing configurations can be efficiently done via CLI.  
+
+3. **Multi-Account Management:**  
+   CLI profiles allow seamless management of multiple AWS accounts using the `--profile` flag.  
+
+---
+
+### **Why CLI is Not Always Recommended**  
+
+1. **Risk of Human Error:**  
+   CLI allows users to perform powerful operations with a single command, which can lead to accidental resource deletion or misconfiguration.  
+
+2. **Security Risks:**  
+   Storing **Access Key ID** and **Secret Access Key** in scripts or local files without encryption could lead to security vulnerabilities.  
+
+3. **Lack of Audit Trail:**  
+   Unlike the AWS Management Console, CLI operations don’t provide a visual history of performed actions, making troubleshooting difficult.  
+
+4. **Requires Expertise:**  
+   Beginners might find the CLI challenging to use due to the need for precise syntax and understanding of AWS services.  
+
+---
+
+### **Alternative Options to AWS CLI**  
+
+1. **AWS Management Console:**  
+   - A graphical interface for performing AWS operations.  
+   - Recommended for beginners or when performing fewer actions.  
+
+2. **AWS SDK/CDK (Cloud Development Kit):**  
+   - Infrastructure-as-Code (IaC) tool to define AWS resources using programming languages like Python, JavaScript, or TypeScript.  
+
+3. **AWS CloudFormation:**  
+   - For deploying and managing AWS infrastructure through YAML/JSON templates.  
+
+---
+
+**AWS CLI Builder:**  
+   - A graphical interface to help generate CLI commands without memorizing syntax.  
+   - [AWS CLI Builder](https://awsclibuilder.com/home) simplifies command creation.  
+
+---
+
+### **Use Cases of AWS CLI for Daily Activities**  
+
+1. **S3 Management:**  
+   - Listing buckets: `aws s3 ls`  
+   - Syncing files between buckets: `aws s3 sync s3://source-bucket s3://destination-bucket`  
+   - Presigned URL generation for object access:  
+     ```bash
+     aws s3 presign s3://bucket-name/object-name --expires-in 300
+     ```  
+
+2. **EC2 Management:**  
+   - Starting or stopping EC2 instances:  
+     ```bash
+     aws ec2 start-instances --instance-ids i-1234567890abcdef0
+     aws ec2 stop-instances --instance-ids i-1234567890abcdef0
+     ```  
+
+3. **IAM User Management:**  
+   - Creating a new IAM user:  
+     ```bash
+     aws iam create-user --user-name new-user
+     ```  
+   - Attaching policies to users:  
+     ```bash
+     aws iam attach-user-policy --user-name new-user --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+     ```  
+
+4. **Multi-Account Profile Usage:**  
+   - Using different profiles for separate AWS accounts:  
+     ```bash
+     aws s3 ls --profile prod-account
+     ```  
+
+---
+
+### **How to Configure and Use AWS CLI**  
+
+1. **Install AWS CLI:**  
+   - Download from [AWS CLI Official Page](https://aws.amazon.com/cli).  
+
+2. **Configure CLI:**  
+   Run `aws configure` to set up:  
+   - Access Key ID  
+   - Secret Access Key  
+   - Default Region  
+   - Output Format (e.g., JSON)  
+
+3. **Version Check:**  
+   ```bash
+   aws --version
+   ```  
+
+4. **Credentials Path:**  
+   - In **Windows:** `C:/users/<username>/.aws/credentials`  
+   - In **Linux/Mac:** `~/.aws/credentials`  
+
+5. **Using Profiles:**  
+   - Create multiple profiles by adding them to `~/.aws/credentials`.  
+   - Use `--profile` to specify a profile in commands.  
+
+---
+
+### **Best Practices for Using AWS CLI**  
+1. Use IAM roles for EC2 instances to avoid hardcoding keys.  
+2. Enable multi-factor authentication (MFA) for accounts.  
+3. Avoid storing keys in plaintext files. Use environment variables or AWS Secrets Manager.  
+4. Test commands in a non-production environment before applying them in production.  
+
+---
+### **What is an IAM Role?**  
+
+An **IAM Role** in AWS is an identity that you can assume to gain temporary access to specific AWS resources. It allows entities like AWS services, applications, or users to interact with AWS without the need to embed **Access Keys** and **Secret Keys** directly.  
+
+- Unlike users, **roles** do not have long-term credentials. Instead, they provide temporary security credentials when assumed.  
+- Roles are designed to be **assumed by trusted entities**, such as:  
+  - AWS services (e.g., EC2, Lambda, ECS).  
+  - Applications running outside AWS (e.g., on-premise or hybrid setups).  
+  - Users from other AWS accounts (cross-account access).  
+
+---
+
+### **Why Use IAM Roles Instead of Access Keys and Secret Keys?**
+
+1. **Enhanced Security:**  
+   - No need to hard-code or store access keys in applications or scripts, reducing the risk of exposure or misuse.  
+   - Temporary credentials automatically expire, reducing the attack surface in case of compromise.  
+
+2. **Least Privilege Principle:**  
+   - IAM roles enforce granular, temporary permissions scoped to a specific action or task.  
+
+3. **Rotation and Expiry:**  
+   - Temporary credentials automatically rotate and expire, ensuring secure access.  
+   - With access keys, manual rotation is required, which can be error-prone.  
+
+4. **Service-Specific Permissions:**  
+   - Assign a role to an EC2 instance, Lambda function, or ECS task to allow it to access AWS resources securely.  
+
+5. **Cross-Account Access:**  
+   - IAM roles simplify sharing resources securely between AWS accounts without exchanging credentials.  
+
+6. **Ease of Integration with AWS Services:**  
+   - Many AWS services (e.g., EC2, Lambda, and ECS) support role-based authentication, making integration seamless.  
+
+---
+
+### **How to Create an IAM Role**
+
+#### **1. Using AWS Management Console**  
+
+1. **Log in to the AWS Console** and navigate to the **IAM** service.  
+2. Select **Roles** from the sidebar and click on **Create Role**.  
+3. **Select Trusted Entity Type:** Choose the entity type that will assume the role:  
+   - **AWS Service:** For EC2, Lambda, etc.  
+   - **Another AWS Account:** For cross-account access.  
+   - **Web Identity or SAML Federation:** For identity federation using OIDC or SAML.  
+
+4. **Attach a Policy:**  
+   - Select an AWS-managed policy or create a custom policy.  
+   - Example: To allow S3 access, attach the `AmazonS3ReadOnlyAccess` policy.  
+
+5. **Name and Review:**  
+   - Provide a role name and review the configuration.  
+   - Click **Create Role**.  
+
+---
+
+### **Examples of Use Cases for IAM Roles**  
+
+1. **Assigning Roles to EC2 Instances:**  
+   - An EC2 instance needs to access an S3 bucket to download files. Instead of embedding keys in the application, assign a role to the EC2 instance with `AmazonS3ReadOnlyAccess`.  
+
+2. **Lambda Functions:**  
+   - A Lambda function that processes images in an S3 bucket and uploads metadata to DynamoDB can use an IAM role with permissions for both services.  
+
+3. **ECS Tasks:**  
+   - ECS tasks running containers require access to SQS or RDS. Assign a task role for secure access.  
+
+4. **Cross-Account Access:**  
+   - Grant developers in Account A access to an S3 bucket in Account B using an IAM role with a trust policy.  
+
+---
+
+### **Best Practices for IAM Roles**  
+
+1. **Follow the Principle of Least Privilege:**  
+   - Assign minimal permissions required for the task.  
+
+2. **Use Role Chaining Carefully:**  
+   - Avoid unnecessary complexity when chaining roles to assume multiple roles.  
+
+3. **Monitor Role Usage:**  
+   - Use AWS CloudTrail to track role assumptions and activities.  
+
+4. **Secure the Trust Relationship:**  
+   - Limit who or what can assume the role using a strict trust policy.  
+
+5. **Leverage Conditions in Policies:**  
+   - Use conditions like `aws:SourceIp`, `aws:RequestTag`, or `aws:MultiFactorAuthPresent` to enforce additional constraints.  
+
+Roles provide a **secure, scalable, and flexible** method to interact with AWS resources, making them a cornerstone of AWS security best practices.
+---
 **Instance Isolation in AWS**  
 
 AWS provides different tenancy options to ensure instance isolation based on security, compliance, and performance needs. The two primary tenancy options are **Shared Tenancy** and **Dedicated Tenancy**, which further includes **Dedicated Instances** and **Dedicated Hosts.**  
