@@ -316,3 +316,118 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
    - Verify that the changes are reflected on the web server by accessing the instance's public IP or domain.
 
 ---
+### **Task 1: Recover a Windows EC2 Instance Administrator Password Without Key Pair**  
+
+**Objective:** Recover the administrator password of a Windows EC2 instance if the key pair is lost using AWS Systems Manager Automation.  
+
+**Instructions:**  
+1. Navigate to the **AWS Systems Manager Console**.  
+2. Choose **Run Command** from the left panel.  
+3. Click **Command Document** and search for the **AWSSupport-RunEC2RescueForWindowsTool** document.  
+4. Select your target Windows EC2 instance.  
+5. Run the automation document and follow the instructions to reset the administrator password.  
+6. Retrieve the new password and log in to the instance via RDP.  
+
+---
+
+### **Task 2: Make a Linux EC2 Instance a Web Server Without Logging into OS**  
+
+**Objective:** Configure an Apache web server on an EC2 instance at launch using user data, without manual SSH access.  
+
+**Instructions:**  
+1. Launch an EC2 instance with Amazon Linux 2.  
+2. Attach a user data script during instance creation to install and configure Apache:  
+   ```bash
+   #!/bin/bash
+   yum install -y httpd
+   systemctl start httpd
+   systemctl enable httpd
+   echo "Hello from $(hostname)" > /var/www/html/index.html
+   ```  
+3. Once the instance is running, access the public IP in a browser to verify the web server.  
+
+---
+
+### **Task 3: Change the Timezone of a Windows EC2 Instance Using SSM Run Command**  
+
+**Objective:** Use AWS Systems Manager Run Command to change the timezone of a Windows EC2 instance.  
+
+**Instructions:**  
+1. Ensure the instance has an **SSM Agent** installed and the necessary IAM role attached.  
+2. Navigate to the **AWS Systems Manager Console**.  
+3. Go to **Run Command** → **Run a command**.  
+4. Choose the document **AWS-RunPowerShellScript**.  
+5. Select your Windows EC2 instance.  
+6. Enter the following command in the script section:  
+   ```powershell
+   tzutil /s "India Standard Time"
+   ```  
+7. Click **Run Command** and verify the timezone change inside the instance.  
+ 
+
+---
+
+### **Task 4: Retrieve System Information from an EC2 Instance**  
+ **Objective:** Use AWS Systems Manager Run Command to check system details like OS version, hostname, and uptime.  
+
+ **Instructions:**  
+1. Open AWS **Systems Manager Console** → **Run Command**.  
+2. Choose the **AWS-RunShellScript** document for Linux or **AWS-RunPowerShellScript** for Windows.  
+3. Select a target EC2 instance.  
+4. Enter the following commands:  
+   - **For Linux:**  
+     ```bash
+     uname -a
+     cat /etc/os-release
+     uptime
+     ```  
+5. Run the command and review the output.
+
+
+---
+
+### **Task 5: Change the Hostname of an EC2 Instance**  
+ **Objective:** Change the hostname of an EC2 instance without logging in.  
+
+ **Instructions:**  
+- **For Linux:**  
+  ```bash
+  hostnamectl set-hostname NewHostname
+  ```  
+- **For Windows:**  
+  ```powershell
+  Rename-Computer -NewName "NewHostname" -Force -Restart
+  ```  
+
+---
+
+### **Task 6: Fetch Public and Private IP Addresses of an Instance**  
+ **Objective:** Use Run Command to retrieve network details of an instance.  
+
+ **Instructions:**  
+- **For Linux:**  
+  ```bash
+  curl http://169.254.169.254/latest/meta-data/public-ipv4
+  curl http://169.254.169.254/latest/meta-data/local-ipv4
+  ```  
+- **For Windows:**  
+  ```powershell
+  Invoke-WebRequest -Uri http://169.254.169.254/latest/meta-data/public-ipv4
+  Invoke-WebRequest -Uri http://169.254.169.254/latest/meta-data/local-ipv4
+  ```  
+
+---
+
+### **Task 7: Reboot an EC2 Instance Using Run Command**  
+ **Objective:** Remotely reboot an EC2 instance using Run Command.  
+
+ **Instructions:**  
+- **For Linux:**  
+  ```bash
+  reboot
+  ```  
+- **For Windows:**  
+  ```powershell
+  Restart-Computer -Force
+  ```  
+---
