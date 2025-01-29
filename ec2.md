@@ -1393,7 +1393,66 @@ Roles provide a **secure, scalable, and flexible** method to interact with AWS r
 
 AWS provides different tenancy options to ensure instance isolation based on security, compliance, and performance needs. The two primary tenancy options are **Shared Tenancy** and **Dedicated Tenancy**, which further includes **Dedicated Instances** and **Dedicated Hosts.**  
 
+### **AWS Systems Manager (SSM) - Overview & Advantages**  
+
+AWS Systems Manager (SSM) is a **management service** that helps you securely **manage, monitor, and automate** operations across your AWS infrastructure. It provides various tools such as **Run Command, Parameter Store, and Instance Connect** to simplify administration tasks.
+
 ---
+
+## **1. SSM Run Command**  
+SSM **Run Command** allows you to remotely execute commands on **one or multiple instances** without needing SSH or RDP.  
+
+### **Prerequisites for Using Run Command:**  
+ **SSM IAM Role:**  
+   - All instances must be associated with an **IAM role** that has **SSM permissions** (e.g., `AmazonSSMManagedInstanceCore`).  
+
+ **SSM Agent Installed & Running:**  
+   - Every instance must have the **SSM Agent** installed and running.  
+   - Installed **by default** on Amazon Linux, Ubuntu, and Windows AMIs.  
+   - For custom AMIs, you must install it manually.  
+
+ **Instance Selection Methods:**  
+   - **Using Tags** → Filter instances by AWS resource tags.  
+   - **Manual Selection** → Choose instances manually from the console.  
+
+### **Use Cases of SSM Run Command:**  
+ **Patch Management:** Run updates across multiple instances.  
+ **Install Software:** Deploy applications or packages remotely.  
+ **Execute Commands in Bulk:** Restart services, modify configurations, or troubleshoot without SSH/RDP.  
+
+---
+
+## **2. SSM Parameter Store**  
+AWS **SSM Parameter Store** is a **secure, scalable key-value store** for storing configuration data and secrets.  
+
+### **Key Features:**  
+ Stores **plaintext** and **encrypted** values (via KMS).  
+ Supports parameter versioning and history.  
+ Can be accessed via CLI, SDKs, CloudFormation, and Lambda.  
+
+### **Use Cases of Parameter Store:**  
+  Store **database credentials**, API keys, and application settings.  
+  Centralized configuration management for **multi-region deployments**.  
+  Use with **AWS Lambda, ECS, and EC2** to inject configurations dynamically.  
+
+---
+
+## **3. SSM Instance Connect**  
+SSM **Instance Connect** allows you to **connect to EC2 instances** securely via the AWS Console **without using SSH keys**.  
+
+### **Advantages of Instance Connect:**  
+ **No need to manage SSH keys** – Improves security.  
+  Works with **Amazon Linux & Ubuntu** instances.  
+  Provides a **temporary browser-based terminal**.  
+
+### **Use Cases of Instance Connect:**  
+  Securely access EC2 instances without SSH.  
+  Troubleshoot connectivity issues if SSH is blocked.  
+  Ideal for **short-lived access** for DevOps and support teams.  
+
+---
+
+## **Tenancy Options in AWS**
 
 ### **1. Shared Tenancy (Default Option)**  
 - **Definition:**  
@@ -1463,3 +1522,57 @@ Choose based on:
 - **Performance Isolation:** Use **Dedicated Instances** for workloads that require isolated hardware.  
 
 ---
+
+### **Instance Store Volumes (Ephemeral Storage)**  
+
+Instance Store volumes are **temporary block-level storage** directly attached to the physical hardware of an EC2 instance. They provide high-performance, low-latency storage but come with significant limitations, making them unsuitable for most real-world use cases.  
+
+---
+
+### **Key Characteristics of Instance Store Volumes:**  
+
+1. **No Free Tier Eligibility**  
+   - Unlike EBS volumes, instance store volumes are not available in the AWS Free Tier.  
+
+2. **Ephemeral Storage (Temporary Storage)**  
+   - Data stored in instance store volumes is **not persistent** and is lost if the instance is stopped, terminated, or fails.  
+
+3. **Instance Stop/Start Not Supported**  
+   - You **cannot stop and restart** an EC2 instance with instance store volumes.  
+   - You can only **reboot** or **terminate** the instance.  
+
+4. **High Performance**  
+   - Since instance store volumes are physically attached to the underlying host, they offer **lower latency and higher throughput** compared to EBS.  
+   - Useful for temporary storage, cache, or high-speed processing tasks.  
+
+5. **Reboot Persistence**  
+   - Rebooting the instance **does not** erase data from the instance store volume.  
+
+6. **Data Loss on Hardware Failure**  
+   - If the **underlying physical server fails**, all data stored in the instance store volume is **lost permanently**.  
+
+---
+
+### **When Should You Use Instance Store Volumes?**  
+
+- **Temporary storage needs:**  
+  - Example: **Buffering, caching, scratch data** for high-speed processing.  
+- **High IOPS and low latency:**  
+  - Example: Applications needing fast temporary data access (e.g., **Apache Spark, Hadoop**).  
+- **Stateless applications:**  
+  - Example: Applications that do not rely on persistent storage and can regenerate data if lost.  
+
+---
+
+### **When Should You Avoid Instance Store Volumes?**  
+
+- **For storing critical or persistent data** (Use Amazon EBS instead).  
+- **For instances that need to be stopped and restarted** (Use EBS-backed instances).  
+- **For applications requiring high availability and durability** (Use S3, EBS, or RDS).  
+
+---
+
+For real-world applications, **EBS volumes** are the preferred choice due to their **durability, flexibility, and managed backups**.
+
+---
+
