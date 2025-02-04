@@ -138,3 +138,87 @@ For a **/16 subnet** (largest allowed by AWS):
 - **Usable IPs**: \( 65536 - 5 = 65531 \)  
 
 ---
+
+### VPC Pre-Checks and Design Considerations
+
+#### 1. Overview of VPC
+- **Virtual Private Cloud (VPC)** is an isolated, region-specific virtual network in AWS. It allows you to launch AWS resources in a virtual network that you define.
+- VPCs provide complete control over your network configuration, including selection of IP address ranges, creation of subnets, configuration of route tables, and network gateways.
+
+#### 2. CIDR Block and IP Planning
+- **CIDR (Classless Inter-Domain Routing):**  
+  This notation defines the size of the IP address space for your VPC. The CIDR block you select determines how many IP addresses are available within the VPC.
+  
+- **Determining the Size of Your VPC:**  
+  Consider how many instances and resources you plan to launch. For example, a VPC CIDR of `192.168.0.0/22` provides:
+  - Calculation: 32 – 22 = 10 bits for host addresses, which means 2^10 = 1024 IP addresses.
+  - This size is appropriate if you need approximately 1000 IP addresses.
+
+#### 3. Subnet Planning within the VPC
+- **Public Subnets:**  
+  These are subnets that are directly connected to the internet. They are typically used for resources such as Elastic Load Balancers (ELBs) and bastion (jump) hosts.
+  
+- **Private Subnets:**  
+  These subnets are not directly accessible from the internet and are used for application servers, databases, and other backend resources.
+  
+- **Example Subnet Allocation:**  
+  With a VPC CIDR of `192.168.0.0/22`, you might plan as follows:
+  - **Public Subnets (2 required):**
+    - Public Subnet in Availability Zone (AZ) ap-south-1a: `192.168.0.0/26`
+    - Public Subnet in AZ ap-south-1b: `192.168.0.64/26`
+  - **Private Subnets (2 required):**
+    - Private Subnet in AZ ap-south-1a: `192.168.0.128/25`
+    - Private Subnet in AZ ap-south-1b: `192.168.1.0/25`
+  
+- **Future Expansion:**  
+  It is recommended to reserve additional IP space within your VPC for future subnets. For example, you might reserve:
+  - `192.168.1.128/25`
+  - `192.168.2.0/25`
+  - `192.168.2.128/25`
+  - `192.168.3.0/24`
+  
+  This planning allows flexibility for future resource growth or additional subnet creation.
+
+#### 4. Example VPC and Subnet Layout
+- **VPC CIDR:** `192.168.0.0/22` (1024 IP addresses)
+  
+- **Subnet Allocation:**
+  - **Public Subnets:**  
+    - Public Subnet 1 (ap-south-1a): `192.168.0.0/26`  
+    - Public Subnet 2 (ap-south-1b): `192.168.0.64/26`
+  - **Private Subnets:**  
+    - Private Subnet 1 (ap-south-1a): `192.168.0.128/25`  
+    - Private Subnet 2 (ap-south-1b): `192.168.1.0/25`
+  - **Reserved for Future Use:**  
+    - Additional subnets as needed, using the remaining IP space from the VPC CIDR block.
+
+- **Application Segmentation:**
+  - **Web/Public Layer:**  
+    Place one public subnet in each AZ to host the ELB and bastion hosts.
+  - **Application Layer:**  
+    Allocate two subnets (one per AZ) for application servers.
+  - **Database Layer:**  
+    Allocate two subnets (one per AZ) for database servers.
+  - **Lambda and Other Services:**  
+    Consider additional subnets for services that require isolated network segments.
+
+#### 5. Additional Considerations
+- **Subnet Sizing:**  
+  - AWS supports a minimum subnet mask of `/28` and a maximum of `/16`.
+  - For example, a `/24` subnet provides 256 IP addresses. However, in AWS, five IP addresses are reserved by default in every subnet:
+    - Two IPs are reserved by the standard networking conventions (Network ID and Broadcast Address).
+    - Three additional IPs are reserved by AWS (typically for the VPC router, DNS servers, and future use).
+  - In a `/24` subnet, usable IP addresses = 256 - 5 = 251.
+  
+- **VPC Design Best Practices:**  
+  - Plan for scalability and future growth.
+  - Ensure subnets are distributed across multiple Availability Zones for high availability.
+  - Allocate public subnets for internet-facing resources and private subnets for backend resources.
+  - Reserve sufficient IP space in your VPC to accommodate future expansion.
+  
+- **Routing and Security:**  
+  - Use appropriate route tables and network ACLs to manage traffic between subnets.
+  - Configure security groups to control access to resources in both public and private subnets.
+
+---
+
