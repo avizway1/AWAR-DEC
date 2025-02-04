@@ -222,3 +222,127 @@ For a **/16 subnet** (largest allowed by AWS):
 
 ---
 
+## VPC and Subnet Configuration Documentation
+
+### **Step 1: Create a VPC**
+
+- **VPC Name:** CustomVPC/Dev-VPC/UAT-VPC/PRD-VPC 
+- **VPC CIDR Block:** 192.168.0.0/22  
+  - This CIDR block provides 1024 IP addresses (2^10), which are sufficient to allocate subnets for current and future needs.
+
+---
+
+### **Step 2: Create Subnets within CustomVPC**
+
+Create separate subnets for public and private resources across different Availability Zones (AZs):
+
+- **Public Subnets:**  
+  - **Public-SN-1A:**  
+    - **Availability Zone:** ap-south-1a  
+    - **CIDR Block:** 192.168.0.0/24  
+    - Provides up to 256 IP addresses (minus AWS-reserved IPs).  
+  - **Public-SN-1B:**  
+    - **Availability Zone:** ap-south-1b  
+    - **CIDR Block:** 192.168.1.0/24
+
+- **Private Subnets:**  
+  - **Private-SN-1A:**  
+    - **Availability Zone:** ap-south-1a  
+    - **CIDR Block:** 192.168.2.0/25  
+    - Provides up to 128 IP addresses (minus AWS-reserved IPs).  
+  - **Private-SN-1B:**  
+    - **Availability Zone:** ap-south-1b  
+    - **CIDR Block:** 192.168.2.128/25
+
+*Note: Reserving multiple subnets across different AZs increases availability and fault tolerance.*
+
+---
+
+### **Step 3: Create and Attach an Internet Gateway**
+
+- **Internet Gateway (IGW):**  
+  - Create one IGW and attach it to the CustomVPC.
+  - An Internet Gateway allows resources in the public subnets to communicate with the internet.
+  - One VPC Support only one IGW.
+
+---
+
+### **Step 4: Create Route Tables and Associate with Subnets**
+
+#### **Public Route Table (PublicRoute)**
+- **Association:**  
+  - Associate with all public subnets (Public-SN-1A and Public-SN-1B).
+- **Routing Rule:**  
+  - Add a route for Internet traffic:  
+    - Destination: 0.0.0.0/0  
+    - Target: Internet Gateway (IGW)
+
+#### **Private Route Table (PrivateRoute)**
+- **Association:**  
+  - Associate with private subnets (Private-SN-1A and Private-SN-1B).
+- **Routing Rule:**  
+  - For private subnets that do not require internet access, no default route via an Internet Gateway is added.
+  - For private subnets that need internet access (for example, for patching, software updates, or accessing external endpoints), configure a NAT Gateway (see below) and add a default route via the NAT Gateway.
+
+---
+
+### **Step 5: Optional Public IP Assignment and DNS Settings**
+
+- **Enable Auto-Assign Public IP:**  
+  - Navigate to the Public Subnet settings in the VPC console, select "Modify auto-assign public IP settings," and enable the option. This ensures that resources launched in the public subnets receive a public IP automatically.
+  
+- **Enable DNS Hostnames:**  
+  - In the VPC settings, choose "Edit VPC Settings" and enable DNS hostnames. This is particularly important for services like RDS Clusters that rely on DNS for endpoint resolution.
+
+---
+
+### **Bastion (Jump) Server**
+
+- **Purpose:**  
+  - A dedicated EC2 instance, typically placed in a public subnet, that acts as a secure gateway (bastion host) to connect to instances in private subnets.
+- **Usage:**  
+  - Administrators log into the bastion host via SSH or RDP and then connect to resources within the private subnets.
+
+---
+
+## NAT Gateway and Private Subnet Internet Access
+
+### **Purpose of NAT Gateway:**
+- **Network Address Translation (NAT) Gateway** allows EC2 instances in private subnets to access the internet (for updates, patching, outbound API calls, etc.) while preventing inbound connections from the internet.
+- NAT Gateway is deployed in a public subnet and is assigned a static public IP via an Elastic IP (EIP).  
+
+- **Note:** NAT Gateways are not available under the free tier and incur additional costs.
+
+### **Configuration for Private Subnets with Internet Access:**
+
+1. **Create a NAT Gateway:**  
+   - Deploy the NAT Gateway in one of the public subnets.  
+   - Associate an Elastic IP (EIP) with the NAT Gateway.
+
+2. **Update Private Route Table (PrivateRoute):**  
+   - Add a default route for private subnets that require internet access:  
+     - Destination: 0.0.0.0/0  
+     - Target: NAT Gateway ID
+
+This configuration allows private subnet resources to initiate outbound traffic to the internet while remaining inaccessible from the internet directly.
+
+---
+
+## Summary of Network Architecture
+
+- **CustomVPC (192.168.0.0/22):** Provides up to 1024 IPs.
+- **Public Subnets:**  
+  - Public-SN-1A (ap-south-1a): 192.168.0.0/24  
+  - Public-SN-1B (ap-south-1b): 192.168.1.0/24  
+- **Private Subnets:**  
+  - Private-SN-1A (ap-south-1a): 192.168.2.0/25  
+  - Private-SN-1B (ap-south-1b): 192.168.2.128/25  
+- **Internet Gateway:** Attached to CustomVPC for public subnet internet access.
+- **Route Tables:**  
+  - PublicRoute: Associated with public subnets; route 0.0.0.0/0 via IGW.  
+  - PrivateRoute: Associated with private subnets; route 0.0.0.0/0 via NAT Gateway for those requiring internet access.
+- **Bastion Host:** Located in public subnets to securely access instances in private subnets.
+- **DNS and Public IP:** Ensure auto-assignment of public IPs in public subnets and enable DNS hostnames for seamless integration with AWS services.
+
+---
+
