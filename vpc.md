@@ -346,3 +346,128 @@ This configuration allows private subnet resources to initiate outbound traffic 
 
 ---
 
+## VPC Flow Logs
+
+VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your Virtual Private Cloud (VPC). Flow Logs can be created at different levels to suit your monitoring and auditing requirements:
+
+- **VPC Level:** Capture traffic for all network interfaces in the VPC.
+- **Subnet Level:** Capture traffic for all network interfaces within a specific subnet.
+- **Instance Level:** Capture traffic for a specific network interface (attached to an instance).
+
+### Flow Logs Destination Options
+
+When creating Flow Logs, you can choose one of the following destinations:
+1. **S3 Bucket:** Store logs in an S3 bucket for long-term archival and analysis.
+2. **CloudWatch Logs Group:** Stream logs to CloudWatch for real-time monitoring and alerting.
+3. **Kinesis Data Firehose:** Stream logs to Kinesis for further processing or integration with external systems.
+
+### IAM Role and Policy for Flow Logs
+
+Before enabling VPC Flow Logs, you must create an IAM role with a policy that grants the required permissions. Below is an example policy that allows CloudWatch Logs operations:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+**Steps to Create the Flow Logs Role:**
+
+1. **Create an IAM Policy:**  
+   - Create a new policy in IAM using the JSON above.
+   
+2. **Create an IAM Role:**  
+   - When creating the role, set the trust relationship as follows to allow VPC Flow Logs to assume the role:
+   
+   ```json
+   {
+       "Version": "2012-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Principal": {
+                   "Service": "vpc-flow-logs.amazonaws.com"
+               },
+               "Action": "sts:AssumeRole"
+           }
+       ]
+   }
+   ```
+   
+3. **Associate the Policy with the Role:**  
+   - Attach the newly created policy to the role.
+
+Once the role is in place, you can enable Flow Logs on your VPC, subnet, or network interface and choose the desired log destination.
+
+---
+
+## Network Access Control Lists (NACLs)
+
+NACLs are a stateless firewall that operate at the subnet level, allowing you to control both inbound and outbound traffic for each subnet in your VPC.
+
+### Key Characteristics of NACLs
+
+- **Subnet Association:**  
+  - A subnet can be associated with only one NACL at a time.
+  
+- **Default NACL:**  
+  - Every VPC comes with a default NACL that allows all traffic. New custom NACLs, however, deny all traffic by default until you add explicit allow rules.
+  
+- **Rule Evaluation Order:**  
+  - NACL rules are evaluated in order, starting from the lowest numbered rule. The first rule that matches the traffic is applied, making lower-numbered rules higher priority.
+  
+- **Ephemeral Ports:**  
+  - In addition to defining rules for common ports, you must account for ephemeral (temporary) ports. AWS recommends allowing traffic on ports 1024 through 65535 as needed, especially for return traffic from clients.
+
+### Comparison: Security Groups vs. NACLs
+
+- **Security Groups:**  
+  - Act as a stateful firewall at the instance level.
+  
+- **NACLs:**  
+  - Operate at the subnet level as a stateless firewall.
+  - You must explicitly allow both inbound and outbound traffic.
+
+---
+
+## Endpoints (Private Links)
+
+Endpoints, also known as Private Links, enable private connectivity between your VPC and AWS services (such as S3 or DynamoDB) without routing traffic over the public internet.
+
+### Types of Endpoints
+
+1. **Gateway Endpoints:**  
+   - Managed by AWS and used for services such as S3 and DynamoDB.
+   - There is no hourly charge; you pay only for data transfer.
+   
+2. **Interface Endpoints:**  
+   - Provisioned as elastic network interfaces (ENIs) in your VPC.
+   - Provide private connectivity to a wide range of AWS services and third-party applications.
+   - Incur an hourly charge per endpoint and data transfer fees.
+
+### Use Cases for Endpoints
+
+- **Enhanced Security:**  
+  - Keep traffic between your VPC and AWS services private by avoiding the public internet.
+  
+- **Compliance:**  
+  - Satisfy regulatory requirements by ensuring data remains within a private network.
+  
+- **Simplified Connectivity:**  
+  - Easily connect to services like S3 and DynamoDB without configuring VPNs or NAT devices.
+
+---
