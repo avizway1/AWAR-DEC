@@ -431,3 +431,97 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
   Restart-Computer -Force
   ```  
 ---
+
+---
+
+### **Task 1: Create a VPC with 2 Subnets (1 Public, 1 Private)**  
+ **Objective:** Create a Virtual Private Cloud (VPC) with one public subnet and one private subnet.  
+
+ **Specifications:**  
+- **VPC:** Custom VPC  
+- **Subnets:**  
+  - **Public Subnet:** `ap-south-1a`  
+  - **Private Subnet:** `ap-south-1b`  
+
+ **Steps:**  
+1. Create a VPC with a CIDR block (e.g., `10.0.0.0/16`).  
+2. Create a public subnet in `ap-south-1a`.  
+3. Create a private subnet in `ap-south-1b`.  
+4. Attach an Internet Gateway (IGW) to the VPC.  
+5. Update the public subnet's route table to allow internet access via IGW.  
+
+---
+
+### **Task 2: Create a VPC with 4 Subnets (2 Public, 2 Private)**  
+ **Objective:** Set up a VPC with multiple public and private subnets for high availability.  
+
+ **Specifications:**  
+- **VPC:** Custom VPC  
+- **Subnets:**  
+  - **Public Subnets:** `ap-south-1a`, `ap-south-1b`  
+  - **Private Subnets:** `ap-south-1a`, `ap-south-1b`  
+
+ **Steps:**  
+1. Create a VPC with a CIDR block (e.g., `10.0.0.0/16`).  
+2. Create two public subnets in `ap-south-1a` and `ap-south-1b`.  
+3. Create two private subnets in `ap-south-1a` and `ap-south-1b`.   
+
+
+---
+
+### **Task 3: Launch a Windows Jump Server and Connect to a Private Windows EC2 Instance**  
+ **Objective:** Create a VPC and set up a Jump Server (Windows) in the public subnet to access a Windows instance in the private subnet.  
+
+ **Specifications:**  
+- **VPC:** Custom VPC  
+- **Instances:**  
+  - **Jump Server:** Windows AMI in Public Subnet  
+  - **Private Instance:** Windows AMI in Private Subnet  
+
+ **Steps:**  
+1. Create a VPC with a public and private subnet.  
+2. Launch a **Windows Jump Server** in the public subnet with an Elastic IP.  
+3. Launch a **Windows EC2 instance** in the private subnet.  
+4. Configure Security Groups to allow RDP from the Jump Server.  
+5. Connect to the Jump Server using RDP.  
+6. From the Jump Server, connect to the private Windows instance via RDP.  
+
+---
+
+### **Task 4: Launch a Windows Jump Server and Connect to a Private Linux EC2 Instance**  
+ **Objective:** Create a VPC with a Jump Server (Windows) in the public subnet to access a Linux instance in the private subnet.  
+
+ **Specifications:**  
+- **VPC:** Custom VPC  
+- **Instances:**  
+  - **Jump Server:** Windows AMI in Public Subnet  
+  - **Private Instance:** Amazon Linux AMI in Private Subnet  
+
+ **Steps:**  
+1. Create a VPC with a public and private subnet.  
+2. Launch a **Windows Jump Server** in the public subnet with an Elastic IP.  
+3. Launch a **Linux EC2 instance** in the private subnet.  
+4. Configure Security Groups to allow RDP to the Jump Server and SSH from the Jump Server to the private Linux instance.  
+5. Connect to the Jump Server using RDP.  
+6. From the Jump Server, SSH into the private Linux instance using a key pair.  
+
+---
+
+### **Task 5: Launch a Linux Jump Server and Connect to a Private Linux EC2 Instance**  
+ **Objective:** Set up a Jump Server (Linux) in the public subnet to access a Linux instance in the private subnet.  
+
+ **Specifications:**  
+- **VPC:** Custom VPC  
+- **Instances:**  
+  - **Jump Server:** Linux AMI in Public Subnet  
+  - **Private Instance:** Linux AMI in Private Subnet  
+
+ **Steps:**  
+1. Create a VPC with a public and private subnet.  
+2. Launch a **Linux Jump Server** in the public subnet with an Elastic IP.  
+3. Launch a **Linux EC2 instance** in the private subnet.  
+4. Configure Security Groups to allow SSH access from your IP to the Jump Server and from the Jump Server to the private Linux instance.  
+5. SSH into the Jump Server.  
+6. From the Jump Server, SSH into the private Linux instance using the key pair.  
+
+---
