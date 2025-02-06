@@ -530,3 +530,73 @@ AWS allows you to associate multiple CIDR blocks with a single VPC. This can hel
 NAT Gateways in AWS work only with IPv4 addresses. For VPCs configured with IPv6 addressing, use an "Egress-Only Internet Gateway" instead. The Egress-Only Internet Gateway provides IPv6 outbound communication for instances in a private subnet while preventing inbound IPv6 traffic from the internet.
 
 ---
+## **AWS Transit Gateway**
+
+### **What is AWS Transit Gateway?**  
+AWS **Transit Gateway (TGW)** is a scalable and centralized networking hub that enables connectivity between multiple VPCs, on-premises networks, and AWS services. It simplifies network architecture by reducing the complexity of managing multiple VPC peering connections.
+
+### **Key Benefits of Transit Gateway**
+- **Scalability:** Connect thousands of VPCs and on-premises networks.
+- **Simplified Management:** Eliminates the need for complex VPC peering.
+- **High Performance:** Uses AWS backbone for optimized data routing.
+- **Centralized Security:** Easily apply security policies across networks.
+
+---
+
+## **Steps to Create and Configure AWS Transit Gateway**
+Follow these high-level steps to set up and configure an AWS Transit Gateway:
+
+### **Step 1: Create a Transit Gateway**
+1. Open the **AWS Management Console**.
+2. Navigate to **VPC > Transit Gateway**.
+3. Click **Create Transit Gateway**.
+4. Provide a **Name** and **Description**.
+5. Configure settings:
+   - **Amazon side ASN:** (Auto-generated or custom ASN)
+   - **DNS Support:** Enabled
+   - **VPN ECMP Support:** Enabled/Disabled (based on requirement)
+   - **Multicast Support:** Enabled/Disabled (for multicast traffic)
+6. Click **Create Transit Gateway**.
+
+---
+
+### **Step 2: Create Transit Gateway Attachments**
+You need to attach **VPCs**, **VPNs**, or **Direct Connect gateways** to the Transit Gateway.
+
+#### **Attach a VPC**
+1. Navigate to **Transit Gateway Attachments**.
+2. Click **Create Attachment**.
+3. Choose **VPC attachment**.
+4. Select the **Transit Gateway ID**.
+5. Choose the **VPC to attach**.
+6. Select the **subnets** to associate.
+7. Click **Create Attachment**.
+
+
+---
+
+### **Step 3: Update Route Tables**
+Each VPC must have a **route table entry** directing traffic to the Transit Gateway.
+
+1. Navigate to **VPC > Route Tables**.
+2. Select the **VPC Route Table**.
+3. Click **Edit Routes**.
+4. Add a route:
+   - **Destination:** CIDR of the peer VPC
+   - **Target:** Transit Gateway ID
+5. Click **Save Routes**.
+
+---
+
+### **Step 4: Validate Connectivity**
+- **Use `ping` or `traceroute` commands** to check network reachability.
+- **Enable VPC Flow Logs** to monitor traffic flow.
+- **Use AWS Transit Gateway Route Tables** to verify routing.
+
+---
+
+### **Video Reference**  
+For a detailed step-by-step tutorial, watch this **YouTube video:**  
+🔗 **[AWS Transit Gateway Full Setup](https://www.youtube.com/watch?v=xyLlMBHy2wc)**  
+
+---
