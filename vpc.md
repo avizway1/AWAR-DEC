@@ -568,7 +568,7 @@ You need to attach **VPCs**, **VPNs**, or **Direct Connect gateways** to the Tra
 2. Click **Create Attachment**.
 3. Choose **VPC attachment**.
 4. Select the **Transit Gateway ID**.
-5. Choose the **VPC to attach**.
+5. Choose the **VPC to attach** (Share TGW with RAM (Resource Access Manager), if you want to share with other region VPCs / Account VPC.
 6. Select the **subnets** to associate.
 7. Click **Create Attachment**.
 
