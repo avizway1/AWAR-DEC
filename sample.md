@@ -525,3 +525,31 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
 6. From the Jump Server, SSH into the private Linux instance using the key pair.  
 
 ---
+### **Task 1: Test Network ACL (NACL) Rules**  
+**Objective:** Understand how NACL rules affect inbound and outbound traffic by testing a web server in a public subnet.  
+
+**Steps:**  
+1. Create a **Custom VPC** with at least one **Public Subnet**.  
+2. Launch an **EC2 instance** in the public subnet.  
+3. Install and configure a **web server** (Apache/NGINX).  
+4. Verify that the web server is accessible from the internet.  
+5. Create a **new NACL** and associate it with the **public subnet** (instead of the default NACL).  
+6. Try accessing the website again—it should be **blocked** due to default deny rules.  
+7. Modify the NACL rules to allow **inbound HTTP (port 80) and outbound traffic**.  
+8. Test again to confirm that the website is accessible.  
+
+---
+
+### **Task 2: Access S3 from a Private EC2 Instance Using an S3 Gateway Endpoint**  
+**Objective:** Enable an EC2 instance in a private subnet to access S3 without internet connectivity.  
+
+**Steps:**  
+1. Create a **Custom VPC** with a **Private Subnet** (no internet gateway or NAT).  
+2. Launch an **EC2 instance** in the private subnet.  
+3. Create an **IAM Role** with **AmazonS3FullAccess** permission and attach it to the EC2 instance.  
+4. From the EC2 instance, try accessing S3 using the AWS CLI (`aws s3 ls`).  
+   - It should **fail** due to the lack of internet connectivity.  
+5. Create an **S3 Gateway Endpoint** in the **VPC**.  
+6. Modify the **private subnet's route table** to associate with the **S3 Endpoint**.  
+7. Try accessing S3 again—it should now **work without internet access**.  
+
