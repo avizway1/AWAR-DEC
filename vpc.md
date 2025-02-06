@@ -471,3 +471,62 @@ Endpoints, also known as Private Links, enable private connectivity between your
   - Easily connect to services like S3 and DynamoDB without configuring VPNs or NAT devices.
 
 ---
+---
+
+## VPC Peering
+
+VPC Peering allows communication between multiple Virtual Private Clouds (VPCs) regardless of whether they are in the same region, different regions, or even different AWS accounts. This is useful for scenarios where resources in separate VPCs need to interact securely.
+
+### Key Considerations for VPC Peering
+
+- **Non-Overlapping CIDR Blocks:**  
+  The requester VPC and the accepter VPC must have non-overlapping CIDR ranges. For example:
+  - Requester VPC (Mumbai): CIDR 192.168.0.0/22  
+  - Accepter VPC (Northern Virginia): CIDR 10.0.0.0/16
+
+- **Non-Transitivity:**  
+  VPC peering is non-transitive. This means if VPC A is peered with VPC B, and VPC B is peered with VPC C, VPC A cannot automatically communicate with VPC C. Separate peering connections are required.
+
+- **Route Table Updates:**  
+  Once a peering connection is established, update the route tables in both VPCs to direct traffic destined for the peer VPC’s CIDR block through the peering connection.
+
+### Example VPC Peering Settings
+
+| Field            | Requester VPC (Mumbai)       | Accepter VPC (Northern Virginia)   |
+|------------------|------------------------------|------------------------------------|
+| VPC CIDR         | 192.168.0.0/22               | 10.0.0.0/16                        |
+| VPC ID           | vpc-08eb76bde20cef7          | vpc-0ba782a5b7a0a49                |
+| Region           | ap-south-1                   | us-east-1                          |
+| Account ID       | 123445678998                 | 123445678998                       |
+
+---
+
+## Site-to-Site VPN Configuration (Enterprise Level)
+
+For enterprises with a dedicated firewall device, establishing a Site-to-Site VPN requires the following steps:
+
+1. **Create a Virtual Private Gateway (VGW):**  
+   Attach the Virtual Private Gateway to your VPC.
+
+2. **Create a Customer Gateway (CGW):**  
+   Provide the public IP address of your corporate office's firewall. This is the external endpoint that the VPN will connect to.
+
+3. **Establish the VPN Connection:**  
+   Using the Virtual Private Gateway and the Customer Gateway, configure the Site-to-Site VPN. Download the VPN configuration from the AWS console and share it with your firewall team for configuration on the on-premises device.
+
+---
+
+## Associating Multiple CIDRs with a VPC
+
+AWS allows you to associate multiple CIDR blocks with a single VPC. This can help accommodate future growth or separate distinct workloads. When adding an additional CIDR block, ensure that:
+
+- The new CIDR range does not conflict with any existing CIDR range in the VPC.
+- Proper route tables and network ACLs are updated to reflect the new address space.
+
+---
+
+## NAT Gateway Alternatives for IPv6
+
+NAT Gateways in AWS work only with IPv4 addresses. For VPCs configured with IPv6 addressing, use an "Egress-Only Internet Gateway" instead. The Egress-Only Internet Gateway provides IPv6 outbound communication for instances in a private subnet while preventing inbound IPv6 traffic from the internet.
+
+---
