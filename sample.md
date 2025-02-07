@@ -553,3 +553,27 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
 6. Modify the **private subnet's route table** to associate with the **S3 Endpoint**.  
 7. Try accessing S3 again—it should now **work without internet access**.  
 
+---
+
+### **Task 1: Configure VPC Peering Across Different AWS Regions**  
+**Objective:** Establish VPC Peering between a **Mumbai (ap-south-1)** VPC and a **Singapore (ap-southeast-1)** VPC within the same AWS account.  
+
+**Steps:**  
+1. **Create VPCs** in both **Mumbai** and **Singapore** regions.  
+2. **Create Subnets** in each VPC (Public and Private as needed).  
+3. **Request a VPC Peering Connection**:  
+   - Navigate to the **Mumbai VPC** → **Peering Connections** → **Create Peering Connection**.  
+   - Choose **Mumbai VPC as the requester** and **Singapore VPC as the accepter**.  
+4. **Accept the Peering Request** from the **Singapore VPC**.  
+5. **Modify Route Tables** in both VPCs to allow traffic via the peering connection.  
+6. **Update Security Groups** to allow traffic between VPCs.  
+7. **Test Connectivity** between resources in both VPCs using ping or other network tools.  
+
+---
+
+### **Task 2: Prepare a VPC Diagram**  
+**Objective:** Design a **VPC architecture diagram** with:  
+- **2 Public Subnets**  
+- **4 Private Subnets**  
+- **NAT Gateway** for private subnets to access the internet  
+- **VPC Flow Logs** for monitoring  
