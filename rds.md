@@ -92,8 +92,6 @@ When deploying a database using Amazon RDS, several configuration aspects must b
 - **Manual Configuration vs. Secrets Manager:**  
   - **Manual Configuration:** You can specify the username and password directly when launching an RDS instance.
   - **AWS Secrets Manager:** For enhanced security and easier credential rotation, store database credentials in AWS Secrets Manager. This approach helps avoid hard-coding credentials in your applications and supports automatic rotation.
-- **Best Practices:**  
-  Use AWS Secrets Manager for production workloads to improve security and streamline credential management.
 
 ### 5. Multi-AZ Deployment
 - **Definition:**  
@@ -108,8 +106,6 @@ When deploying a database using Amazon RDS, several configuration aspects must b
 - **Options:**  
   - **IAM Database Authentication:** Allows you to authenticate to your RDS instance using IAM roles and policies rather than traditional passwords.
   - **Kerberos Authentication:** Enables integration with Microsoft Active Directory for centralized authentication.
-- **Usage:**  
-  Use IAM authentication for scenarios that require fine-grained access control and integration with other AWS services. Kerberos is ideal for organizations with existing AD environments.
 
 ### 7. Monitoring and Enhanced Monitoring
 - **Standard Monitoring:**  
