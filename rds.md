@@ -158,9 +158,7 @@ mysql -h <RDS_ENDPOINT> -u <USERNAME> -P 3306 -p
 2. Use the RDS endpoint, port, and credentials to connect.  
 
 ---
-
 ## Multi-AZ Deployments
-
 ---
 
 Multi-AZ deployments are designed to enhance high availability and fault tolerance for your databases. By deploying a standby instance in a different Availability Zone (AZ), Multi-AZ configurations ensure that data redundancy is maintained and that failover can occur quickly in the event of a hardware or infrastructure failure. Key benefits include eliminating I/O freezes and minimizing latency spikes during system backups.
