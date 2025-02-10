@@ -576,4 +576,68 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
 - **2 Public Subnets**  
 - **4 Private Subnets**  
 - **NAT Gateway** for private subnets to access the internet  
-- **VPC Flow Logs** for monitoring  
+- **VPC Flow Logs** for monitoring
+
+
+---
+
+### **Task 1: Deploy MySQL RDS and Connect Using MySQL Workbench**  
+**Objective:** Launch a **MySQL RDS** instance in a **Custom VPC’s Private Subnet** and connect using **MySQL Workbench** from a Windows EC2 instance in the public subnet.  
+
+**Steps:**  
+1. **Create a Custom VPC** with a **private and public subnet**.  
+2. **Launch an RDS MySQL Instance** in the **private subnet**.  
+   - Choose **MySQL** as the database engine.  
+   - Ensure **public accessibility is disabled**.  
+   - Set up **security groups** to allow connections from the Windows EC2 instance.  
+3. **Launch a Windows EC2 instance** in the **public subnet**.  
+4. **Install MySQL Workbench** on the Windows EC2 instance.  
+5. **Connect to the RDS MySQL Instance** using **MySQL Workbench**.  
+
+---
+
+### **Task 2: Connect to MySQL RDS Using MySQL Client from a Linux Instance**  
+**Objective:** Install **MySQL Client** on a Linux EC2 instance and connect to the **MySQL RDS** instance.  
+
+**Steps:**  
+1. **Launch a Linux EC2 instance** in the **Custom VPC’s Public Subnet**.  
+2. **Install MySQL Client** on the EC2 instance.  
+3. **Connect to the RDS MySQL instance** using the MySQL Client command-line tool.  
+
+---
+
+### **Task 3: Restore a Sample Database and Run SQL Query**  
+**Objective:** Restore a **shared sample database** to the MySQL RDS instance and retrieve customer data using SQL.  
+
+**Steps:**  
+1. **Restore the database** using MySQL Workbench or MySQL Client.  
+2. **Run an SQL command** to list customer information:  
+   ```sql
+   SELECT * FROM db.table;
+   ```
+3. **Verify the output** and ensure the database is properly restored.  
+
+---
+
+### **Task 4: Deploy PostgreSQL RDS and Connect Using pgAdmin**  
+**Objective:** Launch a **PostgreSQL RDS** instance in a **Custom VPC’s Private Subnet** and connect using **pgAdmin** from a public EC2 instance.  
+
+**Steps:**  
+1. **Launch a PostgreSQL RDS Instance** in the **private subnet**.  
+2. **Launch an EC2 instance** in the **public subnet**.  
+3. **Install pgAdmin** on the EC2 instance.  
+4. **Connect to the PostgreSQL RDS** instance using **pgAdmin**.  
+
+---
+
+### **Task 5: Deploy Microsoft SQL Server (Express) RDS and Connect Using SSMS**  
+**Objective:** Launch an **MS SQL RDS (Express) instance** in a **Custom VPC’s Private Subnet** and connect using **SQL Server Management Studio (SSMS)**.  
+
+**Steps:**  
+1. **Launch an MS SQL RDS Instance** in the **private subnet**.  
+2. **Launch a Windows EC2 instance** in the **public subnet**.  
+3. **Install SSMS (SQL Server Management Studio)** on the Windows EC2 instance.  
+4. **Connect to the MS SQL RDS instance** using **SSMS**.  
+
+---
+
