@@ -240,6 +240,24 @@ Automated backups are a key feature of Amazon RDS that automatically creates bac
 - **Functionality:**  
   When enabled, the RDS instance automatically creates a backup copy of the database. These backups support point-in-time recovery and provide a safeguard against data loss.
 
+
+---
+
+**Amazon RDS Proxy**
+
+Amazon RDS Proxy is a fully managed, highly available database proxy that sits between your application and your Amazon RDS database. Its primary purpose is to improve application scalability, resiliency, and security by managing and pooling database connections.
+
+**Benefits:**
+
+- **Reduced Connection Overhead:**  
+  Applications experience lower latency by reusing established connections, which is crucial in high-traffic environments.
+
+- **Simplified Connection Management:**  
+  RDS Proxy abstracts the complexity of connection pooling, automatically handling the creation, maintenance, and termination of connections.
+
+- **Enhanced Fault Tolerance:**  
+  In the event of a database failover, RDS Proxy quickly reroutes connections to the new primary database, improving overall application availability.
+
 ---
 
 ## Amazon Aurora
@@ -257,8 +275,6 @@ Amazon Aurora is a high-performance, fully managed relational database engine th
   Aurora offers high throughput, low latency, and scalability with features such as automatic replication, fault tolerance, and self-healing storage.
 - **Use Case:**  
   Ideal for applications requiring high performance and scalability with a high availability architecture.
-
----
 
 ---
 
