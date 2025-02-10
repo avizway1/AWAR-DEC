@@ -641,3 +641,30 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
 
 ---
 
+### **Task: Connect to a MySQL RDS Database in a Custom VPC Private Subnet Using a Local MySQL Workbench**  
+
+**Objective:**  
+- Launch a **MySQL RDS** instance in a **Custom VPC’s Private Subnet**.  
+- Launch a **Linux EC2 instance** in the **Custom VPC’s Public Subnet**.  
+- Ensure **network communication** between the RDS instance and the EC2 instance.  
+- Install **MySQL Workbench** on your **local laptop** and connect to the RDS database via the **jump server (public EC2 instance)**.  
+
+---
+
+#### **Connect to MySQL RDS Using SSH Tunnel**
+- Open MySQL Workbench and configure the connection:  
+  - **Connection Method:** Standard TCP/IP over SSH  
+  - **SSH Hostname:** `<Public_EC2_Instance_IP>`  
+  - **SSH Username:** `<EC2_User>` (e.g., `ec2-user`)  
+  - **SSH Key File:** Select your **EC2 key pair (.pem file)**  
+  - **MySQL Hostname:** `<RDS_ENDPOINT>`  
+  - **MySQL Port:** `3306`  
+  - **Username:** `<DB_USER>`  
+
+- Click **Connect** and verify database access.  
+
+---
+
+### **Expected Outcome:**  
+- MySQL RDS is **accessible** via the **public EC2 instance** using **MySQL Workbench** on your local laptop.  
+- Secure **RDS access** is achieved without exposing it **directly** to the internet.
