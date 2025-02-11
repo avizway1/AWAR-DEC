@@ -128,6 +128,114 @@ Amazon CloudFront is a Content Delivery Network (CDN) that accelerates the deliv
 - **Geo-Restrictions:**  
   Based on the geographic location of end users, CloudFront allows you to whitelist or block traffic, ensuring that content is delivered only to approved regions.
 
+
+---
+
+## AWS Secrets Manager
+
+**Overview:**  
+AWS Secrets Manager is a fully managed service designed to store, manage, and retrieve sensitive information such as database credentials, API keys, and other secrets. Rather than hardcoding these details in your application code, you can store them securely in Secrets Manager and retrieve them at runtime. Secrets Manager also supports automatic rotation of secrets using AWS Lambda, ensuring that your credentials are updated periodically without manual intervention.
+
+**Benefits:**
+
+- **Security:** Centralized, secure storage with encryption and fine-grained access control.
+- **Automated Rotation:** Built-in capability to rotate secrets automatically using Lambda functions.
+- **Audit and Monitoring:** Integrated with AWS CloudTrail for logging access and changes.
+- **Ease of Integration:** Provides APIs and SDKs for various programming languages to retrieve secrets dynamically.
+
+### Sample Python Code Snippet to Retrieve a Secret
+
+Below is a simple example using Python and the Boto3 SDK to retrieve a secret from AWS Secrets Manager. This snippet assumes that your secret contains keys such as `"username"` and `"password"`, which you can then use to connect to your database.
+
+```python
+import boto3
+import json
+import pymysql  # Example: using PyMySQL for MySQL database connection
+
+def get_secret(secret_name, region_name):
+    """
+    Retrieve the secret value from AWS Secrets Manager.
+    """
+    # Create a Secrets Manager client
+    session = boto3.session.Session()
+    client = session.client(service_name='secretsmanager', region_name=region_name)
+    
+    try:
+        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+    except Exception as e:
+        print(f"Error retrieving secret: {e}")
+        raise e
+
+    # Check if the secret is a string or binary and return as JSON object
+    if 'SecretString' in get_secret_value_response:
+        secret = get_secret_value_response['SecretString']
+    else:
+        secret = get_secret_value_response['SecretBinary'].decode('utf-8')
+    
+    return json.loads(secret)
+
+def connect_to_database():
+    secret_name = "my-database-secret"  # Replace with your secret name
+    region_name = "us-east-1"           # Replace with your region
+    
+    # Retrieve secret
+    secret = get_secret(secret_name, region_name)
+    
+    # Extract credentials (ensure your secret has these keys)
+    db_username = secret['username']
+    db_password = secret['password']
+    db_host = secret['host']
+    db_name = secret['dbname']
+    
+    # Connect to the database using PyMySQL
+    try:
+        connection = pymysql.connect(
+            host=db_host,
+            user=db_username,
+            password=db_password,
+            database=db_name,
+            port=3306  # Change the port if needed
+        )
+        print("Connected to the database successfully!")
+        # Use the connection as needed (e.g., query, update)
+    except Exception as e:
+        print(f"Database connection error: {e}")
+    finally:
+        # Close connection if it was established
+        if 'connection' in locals() and connection.open:
+            connection.close()
+
+if __name__ == "__main__":
+    connect_to_database()
+```
+
+In this example, the `get_secret` function retrieves the secret from Secrets Manager, and the `connect_to_database` function uses the retrieved credentials to establish a connection to a MySQL database using the PyMySQL library.
+
+---
+
+## AWS Systems Manager (SSM) Parameter Store
+
+**Overview:**  
+AWS Systems Manager Parameter Store is a secure, hierarchical storage service for configuration data and secrets management. It is used to store values such as configuration settings, environment variables, and even sensitive information (like passwords) in a central location. However, Parameter Store does not natively support automated rotation like Secrets Manager, and it is best suited for scenarios where you have non-critical secrets or configuration parameters that do not require frequent changes.
+
+**When to Use Parameter Store vs. Secrets Manager:**
+
+- **Use AWS Secrets Manager When:**
+  - You are managing highly sensitive data (e.g., database credentials, API keys).
+  - You require automated secret rotation.
+  - You need advanced auditing and monitoring for sensitive information.
+
+- **Use AWS SSM Parameter Store When:**
+  - You need to store configuration parameters or less sensitive data.
+  - You require hierarchical storage for environment-specific configuration.
+  - Cost is a factor, as Parameter Store is often less expensive for storing a large number of configuration values.
+
+**Example Use Cases:**
+- Storing application configuration settings such as API endpoints, feature flags, or default values.
+- Storing database connection strings where automated rotation is not critical.
+- Using Parameter Store in combination with AWS Systems Manager Automation documents to configure instances during startup.
+
+
 ---
 
 ## AWS Web Application Firewall (WAF)
