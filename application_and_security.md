@@ -300,6 +300,73 @@ DDoS attacks occur when multiple compromised systems target a single system, ove
      As a global content delivery network (CDN), CloudFront can absorb and distribute traffic spikes, reducing the impact of a DDoS attack on your origin resources.
 
 ---
+
+## **AWS Organizations**
+
+**What is AWS Organizations?**  
+AWS Organizations is a service that helps you centrally manage and govern multiple AWS accounts within your environment. It allows you to consolidate billing, enforce security controls, and automate account creation. 
+
+**Key Features:**  
+- **Consolidated Billing:** Manage and view the combined usage and charges for multiple accounts under a single bill.  
+- **Service Control Policies (SCPs):** Restrict or allow specific AWS services and actions across accounts (like a security guardrail).  
+- **Organizational Units (OUs):** Group accounts into OUs to apply policies at a granular level (e.g., Production, Development, Testing).  
+- **Account Creation Automation:** Create new accounts programmatically with predefined policies.  
+
+**Why Use AWS Organizations?**  
+- Centralized governance and policy enforcement.  
+- Simplifies managing multi-account environments for large organizations.  
+- Helps implement security best practices (e.g., separating production and development environments).  
+- Reduces operational overhead with consolidated billing.
+
+---
+
+## **AWS IAM Identity Center (formerly AWS SSO)**
+
+**What is AWS IAM Identity Center (SSO)?**  
+AWS Single Sign-On (SSO) is a service that allows you to centrally manage access to multiple AWS accounts and applications. Users sign in once and can seamlessly access AWS accounts and supported third-party applications without needing multiple sets of credentials.  
+
+**Key Features:**  
+- **Centralized User Management:** Manage users and groups in one place, integrated with Active Directory or AWS Identity Center.  
+- **Federated Access:** Users authenticate once and gain access to multiple AWS accounts without needing separate IAM users.  
+- **Permission Sets:** Define roles (like Admin, Developer, Auditor) and assign them to users across accounts.  
+- **Access Control:** Enforce MFA (multi-factor authentication) and session duration policies.  
+
+**Why Use AWS IAM Identity Center?**  
+- Simplifies account access management (no need to create IAM users in each AWS account).  
+- Improves security with centralized authentication and access auditing.  
+- Integrates with identity providers (e.g., Active Directory, Okta, Azure AD) for seamless user experiences.  
+- Supports temporary security credentials instead of long-term static IAM keys.
+
+---
+
+## **How They Work Together**
+
+**Multi-account setup:**  
+- Use **AWS Organizations** to create and manage multiple AWS accounts in an org hierarchy.  
+- Use **IAM Identity Center (SSO)** to allow users to sign in once and gain access to these accounts with appropriate roles and permissions.
+
+**Example scenario:**  
+- Create accounts for Dev, QA, and Production in **AWS Organizations**.  
+- Create permission sets in **AWS SSO** to give developers access to Dev and QA, and admins access to all accounts.  
+- Apply **Service Control Policies (SCPs)** to prevent destructive actions in the Production account.
+
+---
+
+## **When to Use Them**
+
+Use **AWS Organizations** for:  
+- Structuring and governing multiple AWS accounts.  
+- Enforcing compliance and security policies (SCPs).  
+- Consolidating billing across accounts.
+
+Use **AWS IAM Identity Center (SSO)** for:  
+- Managing user authentication and access to AWS accounts and apps.  
+- Avoiding IAM user sprawl (no need to create IAM users in each AWS account).  
+- Providing a secure, centralized login experience.
+
+---
+
+---
 ## Amazon SNS (Simple Notification Service)
 
 **What is SNS?**  
