@@ -300,4 +300,100 @@ DDoS attacks occur when multiple compromised systems target a single system, ove
      As a global content delivery network (CDN), CloudFront can absorb and distribute traffic spikes, reducing the impact of a DDoS attack on your origin resources.
 
 ---
+## Amazon SNS (Simple Notification Service)
+
+**What is SNS?**  
+Amazon SNS is a fully managed messaging service used to send notifications or messages to a distributed set of recipients (e.g., email, SMS, mobile push notifications, and even other AWS services).
+
+**Key Features:**  
+- Publish-subscribe (Pub/Sub) model.
+- Can send messages to multiple protocols (HTTP/S, email, Lambda, SQS, SMS, mobile push).
+- Topic-based architecture: Create topics and subscribe endpoints to receive messages.
+- Supports message filtering and fan-out.
+- Integration with CloudWatch for alarm notifications.
+
+**Use Cases:**  
+- Send alerts/notifications (e.g., CloudWatch Alarms).
+- Fan-out messages to multiple endpoints.
+- Decoupling microservices.
+
+**Example:**  
+- An EC2 instance failure triggers a CloudWatch Alarm, which sends a notification via SNS.
+
+---
+
+## Amazon SQS (Simple Queue Service)
+
+**What is SQS?**  
+Amazon SQS is a fully managed message queuing service used to decouple and scale distributed systems, microservices, and serverless applications.
+
+**Key Features:**  
+- Message queuing model (point-to-point communication).
+- Two types of queues: Standard Queue and FIFO Queue.
+- Supports unlimited messages and high throughput.
+- Messages can be retained for up to 14 days.
+- Dead Letter Queues (DLQs) to handle processing failures.
+
+**Use Cases:**  
+- Decoupling application components.
+- Processing background tasks asynchronously.
+- Load leveling to prevent application crashes due to traffic spikes.
+
+**Example:**  
+- A web server places tasks into an SQS queue, and worker servers process these tasks asynchronously.
+
+---
+
+## Amazon SWF (Simple Workflow Service)
+
+**What is SWF?**  
+Amazon SWF helps build, run, and monitor background jobs and complex workflows in distributed systems.
+
+**Key Features:**  
+- Task-based architecture (deciders and workers).
+- Supports human and automated tasks.
+- Guarantees task execution order.
+- Tracks the state of each workflow.
+
+**Use Cases:**  
+- Long-running, stateful workflows.
+- Video encoding pipelines.
+- Multi-step human and machine tasks.
+
+**Example:**  
+- An e-commerce order processing workflow: order validation, payment processing, and shipping coordination.
+
+---
+
+## AWS Step Functions
+
+**What are Step Functions?**  
+AWS Step Functions coordinate distributed applications and microservices using visual workflows. It helps manage the execution of AWS Lambda functions and integrates with other AWS services.
+
+**Key Features:**  
+- State machine model.
+- Supports parallel processing, retries, and error handling.
+- Integrates with Lambda, ECS, SQS, DynamoDB, and more.
+- Visual workflow designer for easier monitoring.
+
+**Use Cases:**  
+- Orchestrating microservices.
+- Automating ETL pipelines.
+- Building serverless workflows.
+
+**Example:**  
+- A data processing pipeline that extracts data from S3, transforms it using Lambda, and loads it into a database.
+
+---
+
+**Quick Comparison:**
+
+| Service | Communication Model | Use Case |
+|---------|---------------------|---------|
+| SNS | Pub/Sub | Notify multiple endpoints or fan-out messages |
+| SQS | Queue-based | Decouple components, async message processing |
+| SWF | Task-based | Long-running workflows, stateful processes |
+| Step Functions | State Machine | Orchestrate AWS services and Lambda functions |
+
+---
 
