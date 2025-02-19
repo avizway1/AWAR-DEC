@@ -464,3 +464,70 @@ AWS Step Functions coordinate distributed applications and microservices using v
 
 ---
 
+**AWS Lambda: Serverless Computing Service**
+
+**Overview:**
+AWS Lambda is a serverless compute service that runs code without provisioning or managing servers. You pay only for the compute time you consume, and the service automatically scales to handle incoming requests.
+
+---
+
+**Key Features:**
+
+- **Event-driven architecture:** Lambda is triggered by events from various AWS services (e.g., S3 uploads, DynamoDB table updates, API Gateway requests, etc.).
+- **Stateless execution:** Each Lambda function runs in its isolated environment.
+- **Automatic scaling:** Lambda automatically adjusts the number of running instances based on the request rate.
+- **Flexible language support:** Lambda supports multiple programming languages:
+  - Python
+  - Node.js
+  - Java
+  - .NET Core
+  - Go
+  - Ruby
+
+---
+
+**Performance Considerations:**
+
+- **Memory configuration:** Lambda performance directly depends on memory allocation. Higher memory also increases CPU power proportionally.
+- **Timeout:** Maximum function runtime is 15 minutes. Ensure you configure an appropriate timeout based on your workload.
+- **Cold starts:** When a Lambda function is invoked after being idle, it experiences a cold start latency. Strategies to mitigate cold starts include:
+  - Provisioned Concurrency
+  - Keeping the function warm via periodic triggers (CloudWatch Events).
+
+---
+
+**Lambda Canary:**
+
+- Lambda Canary is a technique to monitor website availability and content verification.
+  - Example: Check if a website contains a specific string.
+    - URL: google.com
+    - String to check: "Google"
+- Use Lambda with CloudWatch Synthetics to create canary checks.
+
+---
+
+**IAM Role and VPC Access:**
+
+- **VPC Integration:** Lambda functions can run within a VPC to access private resources like RDS and ElastiCache.
+  - Ensure the Lambda execution role has the `AWSLambdaVPCAccessExecutionRole` policy.
+  - VPC configuration includes subnet IDs and security groups.
+
+---
+
+**Common Use Cases:**
+
+- **Data processing:** Trigger Lambda on S3 file uploads to process images, videos, or documents.
+- **Real-time file processing:** Use with Kinesis Data Streams to process real-time data.
+- **Web applications:** Build serverless REST APIs with Lambda and API Gateway.
+- **Automation:** Automate infrastructure tasks like backups, cleanup, and notifications.
+
+---
+
+**Best Practices:**
+
+- **Error handling and retries:** Implement error handling mechanisms, and use AWS Step Functions for more complex workflows.
+- **Logging and monitoring:** Use CloudWatch Logs to capture Lambda execution details.
+- **Environment variables:** Avoid hardcoding sensitive information; use Lambda environment variables, Secrets Manager, or SSM Parameter Store.
+- **Security:** Minimize IAM permissions to follow the principle of least privilege.
+
+---
