@@ -668,3 +668,50 @@ Simulate high CPU usage on EC2 instances to observe Auto Scaling behavior.
 ### **Expected Outcome:**  
 - MySQL RDS is **accessible** via the **public EC2 instance** using **MySQL Workbench** on your local laptop.  
 - Secure **RDS access** is achieved without exposing it **directly** to the internet.
+
+---
+
+Task1:  **Deploy and Test Lambda Functions**  
+   - I am sharing a set of Lambda functions. Deploy them and verify their functionality:  
+     - Volume Status Check  
+     - Volume Encryption Check  
+     - Instance Stop  
+     - Instance Start  
+
+Task 2. **S3 Event-Triggered Lambda for Instance Stop**  
+   - Create an S3 bucket. When an object is uploaded to the bucket, it should trigger the **"Stop-Instance"** Lambda function, which will stop the specified EC2 instance.  
+
+Task 3. **File Movement Based on Naming Conventions**  
+   - Any file with a name starting with **"A" or "a"** should be moved to another S3 bucket.  
+   - Any file with a name ending in **".bkp"** should be moved to another S3 bucket.  
+
+Task 4. **Lambda Function for Telnet Test**  
+   - Create a Lambda function to perform a **Telnet test** on `google.com` over port `443`.  
+   - The function should return either **"Telnet Success"** or **"Telnet Failed"** based on the result.  
+
+Task 5. **Inactive IAM Users - Last Login Check**  
+   - Retrieve the list of IAM users who have **not logged into the AWS account in the last 24 hour**.  
+
+Task 6. **Inactive IAM Access Keys Report**  
+   - Get the list of IAM users whose **Access Key ID and Secret Access Key** have **not been used in the last 90 days**.  
+   - Generate a **CSV file** with the list of such users and save it to an **S3 bucket**.  
+
+---
+
+
+Task 1. **Launch an EC2 Instance Using CloudFormation**  
+   - Create a CloudFormation template to launch an EC2 instance.  
+   - Deploy the template and verify that the instance is running.  
+
+Task 2. **S3 Bucket with Lifecycle Rule**  
+   - Create an S3 bucket and configure a **lifecycle rule** for managing objects.  
+   - Use **ChatGPT or Former2** to generate the CloudFormation template.  
+   - Modify the template to update the bucket name as needed.  
+   - Deploy the template and test the lifecycle rule.  
+
+Task 3. **EC2 Instance with Security Group and User Data (Web Server Setup)**  
+   - Create a **new Security Group** within the CloudFormation template.  
+   - Launch an **EC2 instance** using the same template.  
+   - Use **UserData** to configure the instance as a **web server**.  
+   - Open ports **80 (HTTP) and 22 (SSH) for all users (0.0.0.0/0)**.  
+   - Deploy the template and verify the instance and web server setup.  
