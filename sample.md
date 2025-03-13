@@ -1,9 +1,8 @@
-
- Task 1: Launch a Windows EC2 Instance and Connect Using Key Pair
-
+###**Task 1: Launch a Windows EC2 Instance and Connect Using Key Pair
+**
 ---
 
- Task 2: Change the Password of Administrator
+###**Task 2: Change the Password of Administrator**
 
 1. Change Password of Administrator:  
 2. Test Login with New Password:  
@@ -15,7 +14,7 @@
 
 ---
 
- Task 3: Create a New User with Administrator and Remote Desktop Permissions
+###**Task 3: Create a New User with Administrator and Remote Desktop Permissions**
 
 1. Create a New User:  
    - Open Computer Management → Local Users and Groups → Users.  
@@ -38,7 +37,7 @@
 
 ---
 
- Task 4: Install IIS and Deliver a Web Page (Optional)
+###**Task 4: Install IIS and Deliver a Web Page (Optional)**
 
 1. Install IIS:  
    - Open Server Manager → Manage → Add Roles and Features.  
