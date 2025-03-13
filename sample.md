@@ -1,3 +1,77 @@
+
+ Task 1: Launch a Windows EC2 Instance and Connect Using Key Pair
+
+---
+
+ Task 2: Change the Password of Administrator
+
+1. Change Password of Administrator:  
+2. Test Login with New Password:  
+   - Disconnect the RDP session.  
+   - Reconnect using the new password instead of retrieving it from the key pair.  
+   - Verify both methods:  Ans..???
+     - Login using the key-pair-generated password.  
+     - Login using the custom password.
+
+---
+
+ Task 3: Create a New User with Administrator and Remote Desktop Permissions
+
+1. Create a New User:  
+   - Open Computer Management → Local Users and Groups → Users.  
+   - Right-click and select New User.  
+   - Fill in the details (e.g., `Username: JohnDoe`, Password: `UserPassword123`).  
+   - Uncheck User must change password at next logon.
+
+2. Assign Local Administrator Rights:  
+   - Go to Local Users and Groups → Groups.  
+   - Double-click Administrators → Add the new user (`JohnDoe`) to the group.
+
+3. Grant Remote Desktop Permissions:  
+   - Go to System Properties → Remote Settings.  
+   - Under Remote Desktop, click Select Users → Add the new user (`JohnDoe`).
+
+4. Test Login with New User:  
+   - Open a new RDP session.  
+   - Login with the new user credentials (`JohnDoe` and `UserPassword123`).  
+   - Verify simultaneous access with both the Administrator and the new user.
+
+---
+
+ Task 4: Install IIS and Deliver a Web Page (Optional)
+
+1. Install IIS:  
+   - Open Server Manager → Manage → Add Roles and Features.  
+   - Select Role-based or feature-based installation.  
+   - Choose the current server.  
+   - Enable Web Server (IIS) and proceed with the default features.  
+   - Complete the installation.
+
+2. Deploy a Web Page:  
+   - Open File Explorer → Navigate to `C:\inetpub\wwwroot`.  
+   - Replace or edit the `index.html` file with your custom webpage content:  
+   
+     ```html
+     <!DOCTYPE html>
+     <html>
+     <head>
+         <title>IIS-Task </title>
+     </head>
+     <body>
+         <h1>Welcome to "AWS with Avinash Reddy" Trainings. Mater your cloud skills.!</h1>
+         <p>Delivered Webpage via AWS EC2 Instance</p>
+     </body>
+     </html>
+     ```
+
+3. Open Security Group for HTTP:  
+   - Add a rule in the instance’s security group to allow HTTP (port 80) traffic from Anywhere.
+
+4. Access the Web Page:  
+   - Open a browser and navigate to the Public IP of the EC2 instance (e.g., `http://<Public-IP>`).  
+   - The custom webpage should be displayed.
+
+
 ---
 
 ### **Task 1: S3 Bucket Creation and Replication**
