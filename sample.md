@@ -1,4 +1,4 @@
-###**Task 1: Launch a Windows EC2 Instance and Connect Using Key Pair
+### **Task 1: Launch a Windows EC2 Instance and Connect Using Key Pair
 **
 ---
 
